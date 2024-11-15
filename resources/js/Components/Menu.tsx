@@ -1,4 +1,7 @@
-import { SVGAttributes } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChartLine, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { Link } from '@inertiajs/react';
+
 export default function Menu() {
     return (
         <aside
@@ -9,22 +12,22 @@ export default function Menu() {
             <div className="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
                 <ul className="space-y-2">
                     <li>
-                        <a
-                            href="#"
+                        <Link
+                            href="/dashboard"
                             className="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                         >
-                            <svg
-                                aria-hidden="true"
-                                className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" />
-                                <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z" />
-                            </svg>
-                            <span className="ml-3">Overview</span>
-                        </a>
+                            <FontAwesomeIcon icon={faChartLine} />
+                            <span className="ml-3">Dashboard</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link
+                            href="/pegawai"
+                            className="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                        >
+                            <FontAwesomeIcon icon={faUsers} />
+                            <span className="ml-3">Pegawai</span>
+                        </Link>
                     </li>
                 </ul>
             </div>
