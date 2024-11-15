@@ -1,10 +1,11 @@
 import '../css/app.css';
 import './bootstrap';
-import 'flowbite';
 
-import { createInertiaApp } from '@inertiajs/react';
+import { createInertiaApp, router } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
+import { initFlowbite } from 'flowbite';
+import { useEffect } from 'react';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -23,4 +24,4 @@ createInertiaApp({
     progress: {
         color: '#4B5563',
     },
-});
+})
