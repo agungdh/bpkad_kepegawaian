@@ -1,25 +1,13 @@
 import { ColumnDef } from "@tanstack/react-table"
+import { Pegawai } from "./pegawai.model"
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Payment = {
-  id: string
-  amount: number
-  status: "pending" | "processing" | "success" | "failed"
-  email: string
-}
-
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Pegawai>[] = [
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "nip",
+    header: "NIP",
   },
   {
-    accessorKey: "email",
-    header: "Email",
-  },
-  {
-    accessorKey: "amount",
-    header: "Amount",
+    accessorKey: "nama",
+    header: "Nama",
   },
 ]
