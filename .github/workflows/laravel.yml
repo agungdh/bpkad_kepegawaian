@@ -38,3 +38,5 @@ jobs:
         touch database/database.sqlite
     - name: Migrate Database
       run: php artisan migrate
+    - name: Seed Database
+      run: php artisan db:seed
