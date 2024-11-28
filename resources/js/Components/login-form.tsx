@@ -22,6 +22,7 @@ import {
 } from "@/Components/ui/form"
 import axios from "axios"
 import { router } from "@inertiajs/react"
+import { AxiosError } from "axios"
 
 const formSchema = z.object({
   username: z.string(),
@@ -38,8 +39,30 @@ export function LoginForm() {
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    let res = await axios.post('/login', values)
-    let data = res.data
+    try {
+      let res = await axios.post('/login', values)
+      let data = res.data
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        if (e.status == 422) {
+          let errors = e.response?.data?.errors
+
+          for (const key in errors) {
+            const element = errors[key]
+
+            console.log(key, element[0])
+
+            // @ts-ignore
+            form.setError(key, {
+              type: "custom",
+              message: element[0],
+            })
+          }
+        }
+      }
+
+      throw e
+    }
 
     router.visit('/dashboard')
   }
@@ -60,16 +83,19 @@ export function LoginForm() {
                 control={form.control}
                 name="username"
                 render={({ field }) => (
-                  <div className="grid gap-2">
-                    <Label htmlFor="username">Username</Label>
-                    <Input
-                      id="username"
-                      placeholder="Username"
-                      autoComplete="username"
-                      required
-                      {...field}
-                    />
-                  </div>
+                  <FormItem>
+                    <FormLabel>Username</FormLabel>
+                    <FormControl>
+                      <Input {...field}
+                        id="username"
+                        placeholder="Username"
+                        autoComplete="username"
+                        required
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
                 )}
               />
               <FormField
@@ -86,6 +112,7 @@ export function LoginForm() {
                       required
                       {...field}
                     />
+                    <FormMessage />
                   </div>
                 )}
               />
