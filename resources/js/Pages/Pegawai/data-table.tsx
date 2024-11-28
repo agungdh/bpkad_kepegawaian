@@ -4,6 +4,8 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
+  SortingState,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
 
@@ -15,6 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/Components/ui/table"
+import { useEffect, useState } from "react"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -25,11 +28,22 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  const [sorting, setSorting] = useState<SortingState>([])
+
   const table = useReactTable({
     data,
     columns,
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting,
+    },
     getCoreRowModel: getCoreRowModel(),
   })
+
+  useEffect(() => {
+    console.log(sorting)
+  }, [sorting])
 
   return (
     <div className="rounded-md border">
@@ -43,9 +57,9 @@ export function DataTable<TData, TValue>({
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                   </TableHead>
                 )
               })}
