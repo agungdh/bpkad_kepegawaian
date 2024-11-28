@@ -21,6 +21,7 @@ import {
   FormMessage,
 } from "@/Components/ui/form"
 import axios from "axios"
+import { router } from "@inertiajs/react"
 
 const formSchema = z.object({
   username: z.string(),
@@ -40,7 +41,7 @@ export function LoginForm() {
     let res = await axios.post('/login', values)
     let data = res.data
 
-    window.location.href = '/dashboard'
+    router.visit('/dashboard')
   }
 
   return (
@@ -88,7 +89,7 @@ export function LoginForm() {
                   </div>
                 )}
               />
-              <Button type="submit" className="w-full">
+              <Button disabled={form.formState.isSubmitting} type="submit" className="w-full">
                 Login
               </Button>
             </div>

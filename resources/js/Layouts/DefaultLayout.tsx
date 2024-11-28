@@ -7,12 +7,14 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/Components/ui/breadcrumb"
+import { Button } from "@/Components/ui/button"
 import { Separator } from "@/Components/ui/separator"
 import {
     SidebarInset,
     SidebarProvider,
     SidebarTrigger,
 } from "@/Components/ui/sidebar"
+import { Link } from "@inertiajs/react"
 import { PropsWithChildren } from "react"
 
 export default function DefaultLayout({ children }: PropsWithChildren<{}>) {
@@ -36,6 +38,8 @@ export default function DefaultLayout({ children }: PropsWithChildren<{}>) {
                             </BreadcrumbItem>
                         </BreadcrumbList>
                     </Breadcrumb>
+                    <Separator orientation="vertical" className="mr-2 h-4" />
+                    <Link href="/logout"><Button>Logout</Button></Link>
                 </header>
                 {children}
             </SidebarInset>
