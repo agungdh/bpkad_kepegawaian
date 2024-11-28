@@ -13,13 +13,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Administrator',
-            'username' => 'admin',
-            'password' => 'admin',
-            'role' => 'admin',
+        $this->call([
+            PegawaiSeeder::class,
+            HonorerSeeder::class,
+            AdminSeeder::class,
         ]);
-
-        User::factory(10)->create(['role' => 'pegawai']);
     }
 }

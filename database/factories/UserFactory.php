@@ -26,12 +26,12 @@ class UserFactory extends Factory
         $email = fake()->unique()->safeEmail();
 
         return [
-            'name' => fake()->name(),
             'username' => $email,
             'email' => $email,
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'role' => 'pegawai',
         ];
     }
 
