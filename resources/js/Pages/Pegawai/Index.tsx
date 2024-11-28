@@ -4,9 +4,10 @@ import { DataTable } from "./data-table"
 import { Pegawai } from "./pegawai.model"
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { PaginationResult } from "@/models/pagination-result.model"
 
-async function getData(): Promise<Pegawai[]> {
-    let res = await axios.post<Pegawai[]>('/pegawai/datatable')
+async function getData(): Promise<PaginationResult<Pegawai>> {
+    let res = await axios.post<PaginationResult<Pegawai>>('/pegawai/datatable')
     let data = res.data
 
     return data
@@ -16,7 +17,9 @@ export default function Index() {
     let [pegawais, setPegawais] = useState<Pegawai[]>([])
 
     useEffect(() => {
-        getData().then((datas) => {
+        getData().then((paginationResult) => {
+            let datas = paginationResult.data
+
             let newPegawais: Pegawai[] = pegawais
 
             for (let index = 0; index < datas.length; index++) {
