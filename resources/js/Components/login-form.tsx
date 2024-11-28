@@ -84,7 +84,7 @@ export function LoginForm() {
                 name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel htmlFor="username">Username</FormLabel>
                     <FormControl>
                       <Input {...field}
                         id="username"
@@ -102,18 +102,20 @@ export function LoginForm() {
                 control={form.control}
                 name="password"
                 render={({ field }) => (
-                  <div className="grid gap-2">
-                    <Label htmlFor="password">Password</Label>
-                    <Input
-                      id="password"
-                      type="password"
-                      placeholder="Password"
-                      autoComplete="password"
-                      required
-                      {...field}
-                    />
+                  <FormItem>
+                    <FormLabel htmlFor="password">Password</FormLabel>
+                    <FormControl>
+                      <Input {...field}
+                        type="password"
+                        id="password"
+                        placeholder="Password"
+                        autoComplete="current-password"
+                        required
+                        {...field}
+                      />
+                    </FormControl>
                     <FormMessage />
-                  </div>
+                  </FormItem>
                 )}
               />
               <Button disabled={form.formState.isSubmitting} type="submit" className="w-full">
