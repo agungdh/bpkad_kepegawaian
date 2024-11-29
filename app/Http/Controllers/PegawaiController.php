@@ -10,7 +10,13 @@ class PegawaiController extends Controller
 {
     public function datatable(Request $request) 
     {
-        return Pegawai::orderBy('id')->cursorPaginate();
+        $pegawais = Pegawai::query();
+
+        $pegawais = $pegawais->orderBy('id');
+
+        $pegawais = $pegawais->cursorPaginate();
+
+        return $pegawais;
     }
 
     /**
