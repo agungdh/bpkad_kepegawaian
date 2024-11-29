@@ -40,3 +40,7 @@ jobs:
       run: php artisan migrate
     - name: Seed Database
       run: php artisan db:seed
+    - name: Run PHPStan
+      run: ./vendor/bin/phpstan
+    - name: Run Laravel Pint
+      run: ./vendor/bin/pint
