@@ -14,10 +14,21 @@ import {
     SidebarProvider,
     SidebarTrigger,
 } from "@/Components/ui/sidebar"
-import { Link } from "@inertiajs/react"
+import { User } from "@/models/user"
+import { Link, usePage } from "@inertiajs/react"
 import { PropsWithChildren } from "react"
 
 export default function DefaultLayout({ children }: PropsWithChildren<{}>) {
+    const user: User = usePage().props.auth.user;
+
+    if (user.pegawai) {
+        user.profile = user.pegawai
+    }
+
+    if (user.honorer) {
+        user.profile = user.honorer
+    }
+
     return (
         <SidebarProvider>
             <AppSidebar />
@@ -38,6 +49,8 @@ export default function DefaultLayout({ children }: PropsWithChildren<{}>) {
                             </BreadcrumbItem>
                         </BreadcrumbList>
                     </Breadcrumb>
+                    <Separator orientation="vertical" className="mr-2 h-4" />
+                    <p>{user.username} - {user.profile.nama}</p>
                     <Separator orientation="vertical" className="mr-2 h-4" />
                     <Link href="/logout"><Button>Logout</Button></Link>
                 </header>

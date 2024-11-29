@@ -1,10 +1,10 @@
 import DefaultLayout from "@/Layouts/DefaultLayout"
 import { columns } from "./columns"
 import { DataTable } from "./data-table"
-import { Pegawai } from "./pegawai.model"
+import { Pegawai } from "../../models/pegawai"
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { PaginationResult } from "@/models/pagination-result.model"
+import { PaginationResult } from "@/models/pagination-result"
 
 async function getData(): Promise<PaginationResult<Pegawai>> {
     let res = await axios.post<PaginationResult<Pegawai>>('/pegawai/datatable')

@@ -19,7 +19,7 @@ class AdminSeeder extends Seeder
     }
 
     private function seedAdminFromPegawai() {
-        $honorer = Honorer::factory()->create();
+        $honorer = Honorer::factory()->create(['nama' => 'Admin']);
         $user = $honorer->user;
 
         $user->username = 'admin';
@@ -30,7 +30,7 @@ class AdminSeeder extends Seeder
     }
 
     private function seedAdminFromHonorer() {
-        $pegawai = Pegawai::factory()->create();
+        $pegawai = Pegawai::factory()->create(['nama' => 'Admin 2']);
         $user = $pegawai->user;
 
         $user->username = 'admin2';

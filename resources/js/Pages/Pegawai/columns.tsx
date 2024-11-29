@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table"
-import { Pegawai } from "./pegawai.model"
+import { Pegawai } from "../../models/pegawai"
 import { Button } from "@/Components/ui/button"
 import { ArrowUpDown } from "lucide-react"
 
