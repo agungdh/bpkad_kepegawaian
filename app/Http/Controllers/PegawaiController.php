@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Models\Pegawai;
 
 class PegawaiController extends Controller
 {
-    public function datatable(Request $request) 
+    public function datatable(Request $request)
     {
         $pegawais = Pegawai::query();
 

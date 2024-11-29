@@ -2,8 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Pegawai>
  */
@@ -15,15 +16,15 @@ class PegawaiFactory extends Factory
      * @return array<string, mixed>
      */
     public function definition(): array
-    {   
+    {
         if (isset($this->username)) {
             dd($this->username);
-            
+
         }
         $nik = fake()->nik;
 
         $user = User::factory(['username' => $nik])->create();
-        
+
         return [
             'user_id' => $user->id,
             'nip' => $nik,

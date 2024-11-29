@@ -32,7 +32,7 @@ class HandleInertiaRequests extends Middleware
         if ($request->user()) {
             $request->user()->load(['pegawai', 'honorer']);
         }
-        
+
         return [
             ...parent::share($request),
             'auth' => [

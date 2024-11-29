@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Honorer;
 use App\Models\Pegawai;
+use Illuminate\Database\Seeder;
 
 class AdminSeeder extends Seeder
 {
@@ -14,11 +13,12 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-    $this->seedAdminFromHonorer();
-    $this->seedAdminFromPegawai();
+        $this->seedAdminFromHonorer();
+        $this->seedAdminFromPegawai();
     }
 
-    private function seedAdminFromPegawai() {
+    private function seedAdminFromPegawai()
+    {
         $honorer = Honorer::factory()->create(['nama' => 'Admin']);
         $user = $honorer->user;
 
@@ -29,7 +29,8 @@ class AdminSeeder extends Seeder
         $user->save();
     }
 
-    private function seedAdminFromHonorer() {
+    private function seedAdminFromHonorer()
+    {
         $pegawai = Pegawai::factory()->create(['nama' => 'Admin 2']);
         $user = $pegawai->user;
 
