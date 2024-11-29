@@ -14,19 +14,31 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/Components/ui/sidebar"
+import { Link } from "@inertiajs/react"
 
-// This is sample data.
 const data = {
-  versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
   navMain: [
+    {
+      title: "Menu",
+      url: "#",
+      items: [
+        {
+          title: "Dashboard",
+          url: "/dashboard"
+        },
+        {
+          title: "Pegawai",
+          url: "/pegawai",
+        },
+      ],
+    },
     {
       title: "Getting Started",
       url: "#",
       items: [
         {
           title: "Installation",
-          url: "#",
-          isActive: true
+          url: "#"
         },
         {
           title: "Project Structure",
@@ -41,14 +53,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <VersionSwitcher
-          versions={data.versions}
-          defaultVersion={data.versions[0]}
-        />
-        <SearchForm />
+        <p>ini menu</p>
       </SidebarHeader>
       <SidebarContent>
-        {/* We create a SidebarGroup for each parent. */}
         {data.navMain.map((item) => (
           <SidebarGroup key={item.title}>
             <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
@@ -56,8 +63,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <SidebarMenu>
                 {item.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={item.isActive}>
-                      <a href={item.url}>{item.title}</a>
+                    <SidebarMenuButton asChild>
+                      <Link href={item.url}>{item.title}</Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}

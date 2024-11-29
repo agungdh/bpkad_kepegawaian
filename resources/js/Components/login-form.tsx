@@ -50,8 +50,6 @@ export function LoginForm() {
           for (const key in errors) {
             const element = errors[key]
 
-            console.log(key, element[0])
-
             // @ts-ignore
             form.setError(key, {
               type: "custom",

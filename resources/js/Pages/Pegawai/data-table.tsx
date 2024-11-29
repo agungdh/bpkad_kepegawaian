@@ -44,10 +44,6 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
   })
 
-  useEffect(() => {
-    console.log(sorting)
-  }, [sorting])
-
   return (
     <>
       <div className="rounded-md border">
