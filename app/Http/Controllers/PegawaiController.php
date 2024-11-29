@@ -12,7 +12,9 @@ class PegawaiController extends Controller
     {
         $pegawais = Pegawai::query();
 
-        $pegawais = $pegawais->orderBy('id');
+        if ($request->sort) {
+            $pegawais = $pegawais->orderBy($request->sort, $request->sort_desc ? 'asc' : 'desc');
+        }
 
         $pegawais = $pegawais->cursorPaginate();
 

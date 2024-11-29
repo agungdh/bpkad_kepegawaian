@@ -20,26 +20,54 @@ import {
 } from "@/Components/ui/table"
 import { useEffect, useState } from "react"
 import { Button } from "@/Components/ui/button"
+import { Pegawai } from "@/models/pegawai"
+import { PaginationResult } from "@/models/pagination-result"
+import axios from "axios"
+import { columns } from "./columns"
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
-}
+export function DataTable<TData, TValue>() {
+  let [pegawais, setPegawais] = useState<Pegawai[]>([])
+  let [sorting, setSorting] = useState<SortingState>([])
 
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = useState<SortingState>([])
+  async function getData() {
+    let param = {
+      sort: sorting?.[0]?.id,
+      sort_desc: sorting?.[0]?.desc,
+    }
+
+    let res = await axios.post<PaginationResult<Pegawai>>('/pegawai/datatable', param)
+
+    let paginationResult = res.data
+
+    let datas = paginationResult.data
+
+    let newPegawais: Pegawai[] = []
+
+    for (let index = 0; index < datas.length; index++) {
+      const data = datas[index];
+
+      newPegawais.push(data)
+    }
+
+    setPegawais(newPegawais)
+  }
+
+  useEffect(() => {
+    getData()
+  }, []);
+
+  useEffect(() => {
+    getData()
+  }, [sorting])
 
   const table = useReactTable({
-    data,
+    data: pegawais,
     columns,
     onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
     state: {
       sorting,
     },
+    manualSorting: true,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   })
