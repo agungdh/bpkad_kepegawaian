@@ -1,7 +1,19 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { Pegawai } from "../../models/pegawai"
 import { Button } from "@/Components/ui/button"
-import { ArrowUpDown } from "lucide-react"
+import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react"
+
+function sortingState(column: any) {
+  if (column.getIsSorted()) {
+    if (column.getIsSorted() == 'asc') {
+      return <ArrowUp className="ml-2 h-4 w-4" />
+    } else {
+      return <ArrowDown className="ml-2 h-4 w-4" />
+    }
+  } else {
+    return <ArrowUpDown className="ml-2 h-4 w-4" />
+  }
+}
 
 export const columns: ColumnDef<Pegawai>[] = [
   {
@@ -13,7 +25,7 @@ export const columns: ColumnDef<Pegawai>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           NIP
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {sortingState(column)}
         </Button>
       )
     },
@@ -27,7 +39,7 @@ export const columns: ColumnDef<Pegawai>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Nama
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {sortingState(column)}
         </Button>
       )
     },
