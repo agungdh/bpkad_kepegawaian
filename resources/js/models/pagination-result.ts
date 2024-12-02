@@ -4,6 +4,6 @@ export interface PaginationResult<T> {
     per_page:      number;
     next_cursor:   string;
     next_page_url: string;
-    prev_cursor:   null;
-    prev_page_url: null;
+    prev_cursor:   string;
+    prev_page_url: string;
 }

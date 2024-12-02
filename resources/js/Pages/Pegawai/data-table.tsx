@@ -8,6 +8,7 @@ import {
   getSortedRowModel,
   getPaginationRowModel,
   useReactTable,
+  PaginationState,
 } from "@tanstack/react-table"
 
 import {
@@ -25,19 +26,35 @@ import { PaginationResult } from "@/models/pagination-result"
 import axios from "axios"
 import { columns } from "./columns"
 
-export function DataTable<TData, TValue>() {
-  let [pegawais, setPegawais] = useState<Pegawai[]>([])
-  let [sorting, setSorting] = useState<SortingState>([])
+export function DataTable<TData, TValue>({ count }: { count: number }) {
+  const [pegawais, setPegawais] = useState<Pegawai[]>([])
+  const [cursor, setCursor] = useState<{ next: string, prev: string, cursor: string }>({
+    next: '',
+    prev: '',
+    cursor: '',
+  })
+  const [sorting, setSorting] = useState<SortingState>([])
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  });
 
   async function getData() {
     let param = {
       sort: sorting?.[0]?.id,
       sort_desc: sorting?.[0]?.desc,
+      cursor: cursor.cursor
     }
 
     let res = await axios.post<PaginationResult<Pegawai>>('/pegawai/datatable', param)
 
     let paginationResult = res.data
+
+    setCursor({
+      ...cursor,
+      next: paginationResult.next_cursor,
+      prev: paginationResult.prev_cursor,
+    })
 
     let datas = paginationResult.data
 
@@ -58,18 +75,21 @@ export function DataTable<TData, TValue>() {
 
   useEffect(() => {
     getData()
-  }, [sorting])
+  }, [sorting, pagination])
 
   const table = useReactTable({
     data: pegawais,
     columns,
-    onSortingChange: setSorting,
     state: {
       sorting,
+      pagination
     },
     manualSorting: true,
+    onSortingChange: (sorting) => { setCursor({ ...cursor, cursor: '' }); setPagination({ ...pagination, pageIndex: 0 }); setSorting(sorting) },
+    manualPagination: true,
+    onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    rowCount: count
   })
 
   return (
@@ -122,7 +142,7 @@ export function DataTable<TData, TValue>() {
         <Button
           variant="outline"
           size="sm"
-          onClick={() => table.previousPage()}
+          onClick={() => { setCursor({ ...cursor, cursor: cursor.prev }); table.previousPage() }}
           disabled={!table.getCanPreviousPage()}
         >
           Previous
@@ -130,12 +150,12 @@ export function DataTable<TData, TValue>() {
         <Button
           variant="outline"
           size="sm"
-          onClick={() => table.nextPage()}
+          onClick={() => { setCursor({ ...cursor, cursor: cursor.next }); table.nextPage() }}
           disabled={!table.getCanNextPage()}
         >
           Next
         </Button>
-      </div>
+      </div >
     </>
   )
 }

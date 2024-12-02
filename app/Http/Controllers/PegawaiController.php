@@ -16,7 +16,7 @@ class PegawaiController extends Controller
             $pegawais = $pegawais->orderBy($request->sort, $request->sort_desc ? 'desc' : 'asc');
         }
 
-        $pegawais = $pegawais->cursorPaginate();
+        $pegawais = $pegawais->cursorPaginate(10);
 
         return $pegawais;
     }
@@ -26,7 +26,11 @@ class PegawaiController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Pegawai/Index');
+        $count = Pegawai::count();
+
+        return Inertia::render('Pegawai/Index', compact([
+            'count',
+        ]));
     }
 
     /**
