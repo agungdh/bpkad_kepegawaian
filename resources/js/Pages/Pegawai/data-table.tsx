@@ -25,6 +25,10 @@ import { Pegawai } from "@/models/pegawai"
 import { PaginationResult } from "@/models/pagination-result"
 import axios from "axios"
 import { columns } from "./columns"
+import { Input } from "@/Components/ui/input"
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/Components/ui/dropdown-menu"
+import { ChevronDown } from "lucide-react"
+import { useDebounce } from "use-debounce"
 
 export function DataTable<TData, TValue>({ count }: { count: number }) {
   const [pegawais, setPegawais] = useState<Pegawai[]>([])
@@ -33,17 +37,20 @@ export function DataTable<TData, TValue>({ count }: { count: number }) {
     prev: '',
     cursor: '',
   })
+  const [search, setSearch] = useState('')
   const [sorting, setSorting] = useState<SortingState>([])
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   });
+  const [searchValue] = useDebounce(search, 500);
 
   async function getData() {
     let param = {
       sort: sorting?.[0]?.id,
       sort_desc: sorting?.[0]?.desc,
-      cursor: cursor.cursor
+      cursor: cursor.cursor,
+      search: searchValue
     }
 
     let res = await axios.post<PaginationResult<Pegawai>>('/pegawai/datatable', param)
@@ -71,6 +78,11 @@ export function DataTable<TData, TValue>({ count }: { count: number }) {
 
   useEffect(() => {
     getData()
+    console.log(searchValue)
+  }, [searchValue]);
+
+  useEffect(() => {
+    getData()
   }, []);
 
   useEffect(() => {
@@ -93,7 +105,41 @@ export function DataTable<TData, TValue>({ count }: { count: number }) {
   })
 
   return (
-    <>
+    <div className="w-full">
+      <div className="flex items-center py-4">
+        <Input
+          placeholder="Search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="max-w-sm"
+        />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="ml-auto">
+              Columns <ChevronDown />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {table
+              .getAllColumns()
+              .filter((column) => column.getCanHide())
+              .map((column) => {
+                return (
+                  <DropdownMenuCheckboxItem
+                    key={column.id}
+                    className="capitalize"
+                    checked={column.getIsVisible()}
+                    onCheckedChange={(value) =>
+                      column.toggleVisibility(!!value)
+                    }
+                  >
+                    {column.id}
+                  </DropdownMenuCheckboxItem>
+                )
+              })}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -161,6 +207,6 @@ export function DataTable<TData, TValue>({ count }: { count: number }) {
           </Button>
         </div>
       </div >
-    </>
+    </div>
   )
 }

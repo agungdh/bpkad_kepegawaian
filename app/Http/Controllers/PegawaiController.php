@@ -16,6 +16,16 @@ class PegawaiController extends Controller
             $pegawais = $pegawais->orderBy($request->sort, $request->sort_desc ? 'desc' : 'asc');
         }
 
+        if ($request->search) {
+            $pegawais = $pegawais->where(function ($query) use ($request) {
+                $columns = ['nip', 'nama'];
+
+                foreach ($columns as $column) {
+                    $query->orWhere($column, 'like', '%'.$request->search.'%');
+                }
+            });
+        }
+
         $pegawais = $pegawais->cursorPaginate(10);
 
         return $pegawais;
