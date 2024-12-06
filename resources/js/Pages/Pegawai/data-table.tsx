@@ -30,7 +30,8 @@ import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMe
 import { ChevronDown } from "lucide-react"
 import { useDebounce } from "use-debounce"
 
-export function DataTable<TData, TValue>({ count }: { count: number }) {
+export function DataTable<TData, TValue>() {
+  const [count, setCount] = useState<number>(0)
   const [pegawais, setPegawais] = useState<Pegawai[]>([])
   const [cursor, setCursor] = useState<{ next: string, prev: string, cursor: string }>({
     next: '',
@@ -74,6 +75,7 @@ export function DataTable<TData, TValue>({ count }: { count: number }) {
     }
 
     setPegawais(newPegawais)
+    setCount(paginationResult.count)
   }
 
   useEffect(() => {
@@ -186,7 +188,7 @@ export function DataTable<TData, TValue>({ count }: { count: number }) {
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
-          Page {pagination.pageIndex + 1} of {Math.ceil(count / pagination.pageSize)}
+          Page {pagination.pageIndex + 1} of {table.getPageCount()}
         </div>
         <div className="space-x-2">
           <Button

@@ -26,7 +26,11 @@ class PegawaiController extends Controller
             });
         }
 
+        $count = $pegawais->count();
         $pegawais = $pegawais->cursorPaginate(10);
+
+        $pegawais = $pegawais->toArray();
+        $pegawais['count'] = $count;
 
         return $pegawais;
     }
@@ -36,10 +40,7 @@ class PegawaiController extends Controller
      */
     public function index()
     {
-        $count = Pegawai::count();
-
         return Inertia::render('Pegawai/Index', compact([
-            'count',
         ]));
     }
 
