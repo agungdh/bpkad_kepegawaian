@@ -1,41 +1,30 @@
 <?php
 
-use App\Models\Bidang;
+use App\Http\Controllers\BelajarMandiriController;
+use App\Http\Controllers\CoachingController;
+use App\Http\Controllers\DashboardAdminController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DiklatController;
+use App\Http\Controllers\LcController;
+use App\Http\Controllers\MentoringController;
+use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\PpmController;
+use App\Http\Controllers\SeminarController;
+use App\Http\Controllers\WebinarController;
+use App\Http\Controllers\WorkshopController;
 use Illuminate\Support\Facades\Route;
-use Laravel\Fortify\Features;
-use Livewire\Volt\Volt;
 
-Route::get('/tehe', function () {
-    $bidang = Bidang::with('pegawais.bidang.pegawais.user')->get();
-//    dd($bidang->first()->pegawais->first()->user);
-    return $bidang;
-});
-
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
-
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::redirect('/', '/dashboard')->name('home');
 
 Route::middleware(['auth'])->group(function () {
-    Route::redirect('settings', 'settings/profile');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Volt::route('settings/profile', 'settings.profile')->name('profile.edit');
-    Volt::route('settings/password', 'settings.password')->name('password.edit');
-    Volt::route('settings/appearance', 'settings.appearance')->name('appearance.edit');
+    Route::get('/profil', [DashboardController::class, 'profil']);
+    Route::post('/profil', [DashboardController::class, 'profilData']);
+    Route::put('/profil', [DashboardController::class, 'profilUpdate']);
 
-    Volt::route('settings/two-factor', 'settings.two-factor')
-        ->middleware(
-            when(
-                Features::canManageTwoFactorAuthentication()
-                    && Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword'),
-                ['password.confirm'],
-                [],
-            ),
-        )
-        ->name('two-factor.show');
+    Route::post('/pegawai/datatable', [PegawaiController::class, 'datatable']);
+    Route::resource('/pegawai', PegawaiController::class);
 });
 
 require __DIR__.'/auth.php';
