@@ -12,6 +12,11 @@ class Pegawai extends Model
     /** @use HasFactory<\Database\Factories\PegawaiFactory> */
     use HasFactory, HasUuid;
 
+    protected $hidden = [
+        'bidang_id',
+        'user_id',
+    ];
+
     public function bidang(): BelongsTo
     {
         return $this->belongsTo(Bidang::class);

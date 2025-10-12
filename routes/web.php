@@ -12,7 +12,14 @@ use App\Http\Controllers\PpmController;
 use App\Http\Controllers\SeminarController;
 use App\Http\Controllers\WebinarController;
 use App\Http\Controllers\WorkshopController;
+use App\Models\Bidang;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/tehe', function () {
+    $bidang = Bidang::with('pegawais.bidang.pegawais.user')->get();
+//    dd($bidang->first()->pegawais->first()->user);
+    return $bidang;
+});
 
 Route::redirect('/', '/dashboard')->name('home');
 

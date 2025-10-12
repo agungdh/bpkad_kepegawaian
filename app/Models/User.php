@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -16,18 +17,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, TwoFactorAuthenticatable, HasRoles;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    use HasFactory, Notifiable, TwoFactorAuthenticatable, HasRoles, HasUuid;
 
     /**
      * The attributes that should be hidden for serialization.
@@ -35,15 +25,12 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $hidden = [
-        'id',
         'password',
         'email_verified_at',
         'two_factor_secret',
         'two_factor_recovery_codes',
         'two_factor_confirmed_at',
         'remember_token',
-        'created_at',
-        'updated_at',
     ];
 
     public function pegawai(): HasOne {
