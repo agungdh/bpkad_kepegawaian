@@ -31,4 +31,14 @@ trait HasUuid
             }
         });
     }
+
+    public function scopeFindByUuid($query, $uuid)
+    {
+        return $query->where('uuid', $uuid)->first();
+    }
+
+    public function scopeFindOrFailByUuid($query, $uuid)
+    {
+        return $query->where('uuid', $uuid)->firstOrFail();
+    }
 }

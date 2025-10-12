@@ -1,24 +1,16 @@
 <?php
 
-use App\Http\Controllers\BelajarMandiriController;
-use App\Http\Controllers\CoachingController;
-use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DiklatController;
-use App\Http\Controllers\LcController;
-use App\Http\Controllers\MentoringController;
-use App\Http\Controllers\PegawaiController;
-use App\Http\Controllers\PpmController;
-use App\Http\Controllers\SeminarController;
-use App\Http\Controllers\WebinarController;
-use App\Http\Controllers\WorkshopController;
 use App\Models\Bidang;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/tehe', function () {
-    $bidang = Bidang::with('pegawais.bidang.pegawais.user')->get();
-//    dd($bidang->first()->pegawais->first()->user);
+    $bidang = Bidang::with('pegawais.bidang.pegawais.user')->findByUuid('f7ef94f9-441d-44d5-83ab-f4b41f7beb2a');
+//    dd($bidang);
     return $bidang;
+    $bidangs = Bidang::with('pegawais.bidang.pegawais.user')->get();
+//    dd($bidangs->first()->pegawais->first()->user);
+    return $bidangs;
 });
 
 Route::redirect('/', '/dashboard')->name('home');
