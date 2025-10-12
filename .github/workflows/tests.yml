@@ -82,3 +82,6 @@ jobs:
 
       - name: Run Migrations
         run: php artisan migrate --seed --force
+
+      - name: Run Route List
+        run: php artisan route:list
