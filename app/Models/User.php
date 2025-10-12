@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -32,11 +34,20 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $hidden = [
+        'id',
         'password',
+        'email_verified_at',
         'two_factor_secret',
-        'two_factory_recovery_codes',
+        'two_factor_recovery_codes',
+        'two_factor_confirmed_at',
         'remember_token',
+        'created_at',
+        'updated_at',
     ];
+
+    public function pegawai(): HasOne {
+        return $this->hasOne(Pegawai::class);
+    }
 
     /**
      * Get the attributes that should be cast.

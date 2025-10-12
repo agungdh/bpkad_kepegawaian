@@ -1,8 +1,15 @@
 <?php
 
+use App\Models\Bidang;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
+
+Route::get('/tehe', function () {
+    $bidang = Bidang::with('pegawais.bidang.pegawais.user')->get();
+//    dd($bidang->first()->pegawais->first()->user);
+    return $bidang;
+});
 
 Route::get('/', function () {
     return view('welcome');
