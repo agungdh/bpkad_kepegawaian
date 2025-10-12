@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -49,6 +50,23 @@ class User extends Authenticatable
         return $this->hasOne(Pegawai::class);
     }
 
+    protected $appends = ['profile', 'name'];
+
+    protected function profile(): Attribute
+    {
+        return Attribute::get(fn () => $this->getProfile());
+    }
+
+    protected function name(): Attribute
+    {
+        return Attribute::get(fn () => $this->profile->nama);
+    }
+
+    protected function rolename(): Attribute
+    {
+        return Attribute::get(fn () => $this->getRole()->name);
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -72,5 +90,19 @@ class User extends Authenticatable
             ->take(2)
             ->map(fn ($word) => Str::substr($word, 0, 1))
             ->implode('');
+    }
+
+    public function getProfile()
+    {
+        return match ($this->getRole()?->name) {
+            'admin' => $this->admin,
+            'pegawai' => $this->pegawai,
+            default => null,
+        };
+    }
+
+    public function getRole()
+    {
+        return $this->roles()->first();
     }
 }
