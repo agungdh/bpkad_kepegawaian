@@ -2,17 +2,20 @@
 
 namespace Database\Seeders;
 
-use App\Models\Bidang;
+use App\Models\Pegawai;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class BidangSeeder extends Seeder
+class PegawaiSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Bidang::factory(5)->create();
+        Pegawai::factory(20)->create()->each(function ($pegawai) {
+            $user = $pegawai->user;
+            $user->assignRole('pegawai');
+        });
     }
 }
