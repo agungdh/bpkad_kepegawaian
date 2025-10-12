@@ -22,8 +22,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profil', [DashboardController::class, 'profilData']);
     Route::put('/profil', [DashboardController::class, 'profilUpdate']);
 
-    Route::post('/pegawai/datatable', [PegawaiController::class, 'datatable']);
-    Route::resource('/pegawai', PegawaiController::class);
+//    Route::post('/pegawai/datatable', [PegawaiController::class, 'datatable']);
+//    Route::resource('/pegawai', PegawaiController::class);
 });
 
 require __DIR__.'/auth.php';
