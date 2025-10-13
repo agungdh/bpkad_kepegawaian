@@ -24,7 +24,6 @@ return new class extends Migration
 
         DB::statement('CREATE INDEX users_uuid_hash_index ON users USING hash (uuid);');
 
-
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');

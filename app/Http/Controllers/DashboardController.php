@@ -3,13 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bidang;
-use App\Models\Diklat;
-use App\Models\Lc;
 use App\Models\PangkatGolongan;
-use App\Models\Pegawai;
-use App\Models\Ppm;
-use App\Models\Seminar;
-use App\Models\Webinar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;

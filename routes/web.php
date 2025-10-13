@@ -6,10 +6,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/tehe', function () {
     $bidang = Bidang::with('pegawais.bidang.pegawais.user')->findByUuid('f7ef94f9-441d-44d5-83ab-f4b41f7beb2a');
-//    dd($bidang);
+
+    //    dd($bidang);
     return $bidang;
     $bidangs = Bidang::with('pegawais.bidang.pegawais.user')->get();
-//    dd($bidangs->first()->pegawais->first()->user);
+
+    //    dd($bidangs->first()->pegawais->first()->user);
     return $bidangs;
 });
 
@@ -22,8 +24,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profil', [DashboardController::class, 'profilData']);
     Route::put('/profil', [DashboardController::class, 'profilUpdate']);
 
-//    Route::post('/pegawai/datatable', [PegawaiController::class, 'datatable']);
-//    Route::resource('/pegawai', PegawaiController::class);
+    //    Route::post('/pegawai/datatable', [PegawaiController::class, 'datatable']);
+    //    Route::resource('/pegawai', PegawaiController::class);
 });
 
 require __DIR__.'/auth.php';

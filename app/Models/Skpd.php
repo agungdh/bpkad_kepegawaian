@@ -12,7 +12,8 @@ class Skpd extends Model
     /** @use HasFactory<\Database\Factories\SkpdFactory> */
     use HasFactory, HasUuid;
 
-    public function bidangs(): HasMany {
+    public function bidangs(): HasMany
+    {
         return $this->hasMany(Bidang::class);
     }
 }

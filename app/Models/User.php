@@ -6,7 +6,6 @@ namespace App\Models;
 use App\Models\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -17,7 +16,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, TwoFactorAuthenticatable, HasRoles, HasUuid;
+    use HasFactory, HasRoles, HasUuid, Notifiable, TwoFactorAuthenticatable;
 
     /**
      * The attributes that should be hidden for serialization.
@@ -33,7 +32,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function pegawai(): HasOne {
+    public function pegawai(): HasOne
+    {
         return $this->hasOne(Pegawai::class);
     }
 
@@ -82,7 +82,7 @@ class User extends Authenticatable
     public function getProfile()
     {
         return match ($this->getRole()?->name) {
-            'admin' => $this->admin,
+            'admin' => $this->pegawai,
             'pegawai' => $this->pegawai,
             default => null,
         };

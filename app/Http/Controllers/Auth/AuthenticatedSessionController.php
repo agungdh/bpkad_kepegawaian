@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthenticatedSessionController extends Controller
 {
-    public function show(Request $request) {
+    public function show(Request $request)
+    {
         $user = $request->user();
         $user->load('pegawai.bidang');
 

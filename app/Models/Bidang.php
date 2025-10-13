@@ -22,7 +22,8 @@ class Bidang extends Model
         return $this->belongsTo(Skpd::class);
     }
 
-    public function pegawais(): HasMany {
+    public function pegawais(): HasMany
+    {
         return $this->hasMany(Pegawai::class);
     }
 }
