@@ -12,6 +12,6 @@ class BidangSeeder extends Seeder
      */
     public function run(): void
     {
-        Bidang::factory(5)->create();
+        Bidang::factory(50)->create();
     }
 }

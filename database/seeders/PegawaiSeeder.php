@@ -16,7 +16,7 @@ class PegawaiSeeder extends Seeder
         $this->createAdmin();
         $this->createPegawai();
 
-        Pegawai::factory(10)->create()->each(function ($pegawai) {
+        Pegawai::factory(100)->create()->each(function ($pegawai) {
             $user = $pegawai->user;
             $user->assignRole('pegawai');
         });
