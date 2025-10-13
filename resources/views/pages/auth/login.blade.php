@@ -29,7 +29,24 @@
             background-position: center;
             background-repeat: no-repeat;
         }
+
+        /* efek transparan + blur */
+        .login-box .card {
+            background: rgba(255, 255, 255, 0.85); /* transparan putih */
+            backdrop-filter: blur(8px); /* efek blur latar belakang */
+            -webkit-backdrop-filter: blur(8px); /* dukungan Safari */
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+        }
+
+        /* agar teks tetap nyaman dibaca */
+        .login-box .card-body,
+        .login-box .card-header a {
+            color: #333;
+        }
     </style>
+
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -73,12 +90,14 @@
     <!-- /.card -->
 </div>
 <!-- /.login-box -->
+
 <p style="position: absolute; bottom: 10px; width: 100%; text-align: center; color: white; font-size: 12px;">
     Foto oleh <a href="https://unsplash.com/id/@cristina_gottardi?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
                  style="color: #fff; text-decoration: underline;">Cristina Gottardi</a> di
     <a href="https://unsplash.com/id/foto/formasi-batuan-coklat-di-bawah-langit-biru-CSpjU6hYo_0?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
        style="color: #fff; text-decoration: underline;">Unsplash</a>
 </p>
+
 <!-- jQuery -->
 <script src="/assets/AdminLTE-3.2.0/plugins/jquery/jquery.min.js"></script>
 <script>
