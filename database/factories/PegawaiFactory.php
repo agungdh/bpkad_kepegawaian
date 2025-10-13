@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Bidang;
-use App\Models\Skpd;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

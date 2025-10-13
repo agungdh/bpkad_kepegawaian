@@ -56,6 +56,7 @@ class PegawaiController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
      * @throws Throwable
      */
     public function store(Request $request)
@@ -134,7 +135,7 @@ class PegawaiController extends Controller
                     if (Bidang::query()->findOrFailByUuid($value)->skpd->uuid != $request->skpd) {
                         $fail('The Bidang is not matched the SKPD.');
                     }
-                }
+                },
             ],
             'nama' => 'required',
             'nip' => 'required|numeric|unique:pegawais,nip|unique:users,username',
