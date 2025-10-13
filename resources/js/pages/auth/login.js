@@ -1,7 +1,7 @@
 Alpine.data('form', () => ({
     formData: {
         username: '',
-        password: ''
+        password: '',
     },
     validationErrors: {},
     isSubmitting: false,
@@ -22,6 +22,5 @@ Alpine.data('form', () => ({
         } finally {
             this.isSubmitting = false;
         }
-    }
-
+    },
 }));

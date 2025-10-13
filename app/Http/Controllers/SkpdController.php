@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Skpd;
-use App\Models\Pegawai;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -37,7 +35,7 @@ class SkpdController extends Controller
     public function create()
     {
         return view('pages.skpd.form', compact([
-         ]));
+        ]));
     }
 
     /**
@@ -86,7 +84,8 @@ class SkpdController extends Controller
         $skpd->delete();
     }
 
-    private function validated(Request $request) {
+    private function validated(Request $request)
+    {
         return $request->validate([
             'skpd' => 'required',
         ]);

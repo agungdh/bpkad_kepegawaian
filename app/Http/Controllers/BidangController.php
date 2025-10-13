@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pegawai;
 use App\Models\Bidang;
 use App\Models\Skpd;
 use Illuminate\Http\Request;
@@ -12,7 +11,7 @@ class BidangController extends Controller
 {
     public function datatable(Request $request)
     {
-        $datas = Bidang::from(new Bidang()->getTable() . ' as b');
+        $datas = Bidang::from(new Bidang()->getTable().' as b');
         $datas->select([
             'b.*',
             's.skpd',
@@ -98,7 +97,8 @@ class BidangController extends Controller
         $bidang->delete();
     }
 
-    private function validated(Request $request) {
+    private function validated(Request $request)
+    {
         $data = $request->validate([
             'skpd' => 'required|exists:skpds,uuid',
             'bidang' => 'required',
