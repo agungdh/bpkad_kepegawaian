@@ -118,10 +118,15 @@ class PegawaiController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @throws Throwable
      */
     public function destroy(Request $request, Pegawai $pegawai)
     {
-        $pegawai->delete();
+        DB::transaction(function () use ($pegawai) {
+            $pegawai->delete();
+            $pegawai->user->delete();
+        });
     }
 
     private function validated(Request $request)
