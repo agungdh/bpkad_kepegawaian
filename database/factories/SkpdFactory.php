@@ -2,13 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Skpd;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Bidang>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Skpd>
  */
-class BidangFactory extends Factory
+class SkpdFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,8 +17,7 @@ class BidangFactory extends Factory
     public function definition(): array
     {
         return [
-            'nama' => fake()->name(),
-            'skpd_id' => Skpd::query()->inRandomOrder()->first()->id,
+            'skpd' => fake()->name(),
         ];
     }
 }

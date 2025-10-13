@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('bidangs', function (Blueprint $table) {
             $table->id();
             $table->uuid();
+            $table->foreignId('skpd_id')->constrained('skpds');
             $table->string('nama');
             $table->timestamps();
         });
