@@ -18,14 +18,13 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="/assets/AdminLTE-3.2.0/dist/css/adminlte.min.css">
 
-    <link rel="icon" href="/assets/images/426af677dddc080bde5939670bea6d39~tplv-tiktokx-cropcenter_1080_1080.jpeg"
-          type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
         body.login-page {
-            background-image: url('/assets/images/WhatsApp Image 2025-07-09 at 13.51.39.jpeg'); /* Ganti path gambar sesuai lokasi kamu */
+            background-image: url('/cristina-gottardi-CSpjU6hYo_0-unsplash.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -74,7 +73,12 @@
     <!-- /.card -->
 </div>
 <!-- /.login-box -->
-
+<p style="position: absolute; bottom: 10px; width: 100%; text-align: center; color: white; font-size: 12px;">
+    Foto oleh <a href="https://unsplash.com/id/@cristina_gottardi?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+                 style="color: #fff; text-decoration: underline;">Cristina Gottardi</a> di
+    <a href="https://unsplash.com/id/foto/formasi-batuan-coklat-di-bawah-langit-biru-CSpjU6hYo_0?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+       style="color: #fff; text-decoration: underline;">Unsplash</a>
+</p>
 <!-- jQuery -->
 <script src="/assets/AdminLTE-3.2.0/plugins/jquery/jquery.min.js"></script>
 <script>
