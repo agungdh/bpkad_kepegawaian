@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BidangController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\SkpdController;
 use App\Models\Bidang;
 use Illuminate\Support\Facades\Route;
@@ -32,8 +33,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/bidang/datatable', [BidangController::class, 'datatable']);
     Route::resource('/bidang', BidangController::class);
 
-    //    Route::post('/pegawai/datatable', [PegawaiController::class, 'datatable']);
-    //    Route::resource('/pegawai', PegawaiController::class);
+    Route::post('/pegawai/datatable', [PegawaiController::class, 'datatable']);
+    Route::resource('/pegawai', PegawaiController::class);
 });
 
 require __DIR__.'/auth.php';
