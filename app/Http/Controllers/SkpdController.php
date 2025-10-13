@@ -36,11 +36,8 @@ class SkpdController extends Controller
      */
     public function create()
     {
-        $pegawais = Pegawai::select(['id', 'nama', 'nip'])->orderBy('nip')->get();
-
         return view('pages.skpd.form', compact([
-            'pegawais',
-        ]));
+         ]));
     }
 
     /**

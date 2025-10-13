@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->uuid();
             $table->foreignId('skpd_id')->constrained('skpds');
-            $table->string('nama');
+            $table->string('bidang');
             $table->timestamps();
         });
 

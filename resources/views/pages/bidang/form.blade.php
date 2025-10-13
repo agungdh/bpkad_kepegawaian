@@ -1,19 +1,19 @@
 @extends('layouts.default')
 
 @section('title')
-    SKPD
+    Bidang
 @endsection
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="/">Home</a></li>
-    <li class="breadcrumb-item active">SKPD</li>
+    <li class="breadcrumb-item active">Bidang</li>
 @endsection
 
 @section('content')
     <!-- Default box -->
     <div class="card" x-data="form" id="formComponent">
         <div class="card-header">
-            <h3 class="card-title">{{ isset($skpd) ? 'Ubah' : 'Tambah' }} Data SKPD</h3>
+            <h3 class="card-title">{{ isset($bidang) ? 'Ubah' : 'Tambah' }} Data Bidang</h3>
         </div>
         <form @submit.prevent="submit">
             <div class="card-body row">
@@ -21,6 +21,31 @@
                 <div class="form-group col-6">
                     @php($formName = 'skpd')
                     @php($formLabel = 'SKPD')
+                    <label for="{{$formName}}">{{$formLabel}}</label>
+                    <select type="text" class="form-control select2" id="{{$formName}}"
+                            :class="{'is-invalid': validationErrors.{{$formName}}}">
+                        <option value="">{{$formLabel}}</option>
+                        @foreach($skpds as $skpd)
+                            <option value="{{$skpd->uuid}}">{{$skpd->skpd}}</option>
+                        @endforeach
+                    </select>
+                    <template x-if="validationErrors.{{$formName}}">
+                        <div class="invalid-feedback" x-text="validationErrors.{{$formName}}"></div>
+                    </template>
+                    @push('scripts')
+                        <script>
+                            $(document).ready(function() {
+                                $('#{{$formName}}').change(function() {
+                                    formAlpine.formData.{{$formName}} = $(this).val();
+                                });
+                            });
+                        </script>
+                    @endpush
+                </div>
+
+                <div class="form-group col-6">
+                    @php($formName = 'bidang')
+                    @php($formLabel = 'Bidang')
                     <label for="{{$formName}}">{{$formLabel}}</label>
                     <input type="text" class="form-control" id="{{$formName}}" placeholder="{{$formLabel}}"
                            x-model.lazy="formData.{{$formName}}"
@@ -33,7 +58,7 @@
             </div>
 
             <div class="card-footer">
-                <a href="/skpd">
+                <a href="/bidang">
                     <button type="button" class="btn btn-info">Kembali</button>
                 </a>
                 <button type="submit" class="btn btn-primary">Simpan</button>
@@ -45,24 +70,29 @@
 
 @push('scripts')
     <script>
-        uuid = @json($skpd?->uuid ?? null);
+        uuid = @json($bidang?->uuid ?? null);
 
         document.addEventListener('alpine:init', () => {
             Alpine.data('form', () => ({
                 formData: {
                     skpd: '',
+                    bidang: '',
                 },
                 validationErrors: {},
 
                 async initData(uuid) {
-                    let res = await axios.get(`/skpd/${uuid}`);
+                    let res = await axios.get(`/bidang/${uuid}`);
                     let data = res.data;
+
+                    data.skpd = data.skpd.uuid
 
                     for (let key in this.formData) {
                         if (data.hasOwnProperty(key)) {
                             this.formData[key] = data[key];
                         }
                     }
+
+                    $('#skpd').val(data.skpd).change();
                 },
 
                 async submit() {
@@ -76,12 +106,12 @@
                         if (uuid) {
                             formData.append('_method', 'PUT');
 
-                            await axios.post(`/skpd/${uuid}`, formData);
+                            await axios.post(`/bidang/${uuid}`, formData);
                         } else {
-                            await axios.post('/skpd', formData);
+                            await axios.post('/bidang', formData);
                         }
 
-                        window.location.href = '/skpd';
+                        window.location.href = '/bidang';
                     } catch (err) {
                         if (err.response?.status === 422) {
                             this.validationErrors = err.response.data.errors ?? {};

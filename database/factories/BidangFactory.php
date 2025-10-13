@@ -18,8 +18,8 @@ class BidangFactory extends Factory
     public function definition(): array
     {
         return [
-            'nama' => fake()->name(),
             'skpd_id' => Skpd::query()->inRandomOrder()->first()->id,
+            'bidang' => fake()->name(),
         ];
     }
 }
