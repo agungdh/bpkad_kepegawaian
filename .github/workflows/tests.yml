@@ -85,3 +85,6 @@ jobs:
 
       - name: Run Route List
         run: php artisan route:list
+
+      - name: Run Optimize
+        run: php artisan optimize
