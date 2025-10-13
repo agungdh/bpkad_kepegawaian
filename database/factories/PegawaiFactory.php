@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Bidang;
+use App\Models\Skpd;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,9 +25,11 @@ class PegawaiFactory extends Factory
             'username' => $nip,
         ]);
         $bidang = Bidang::query()->inRandomOrder()->first();
+        $skpd = $bidang->skpd;
 
         return [
             'user_id' => $user->id,
+            'skpd_id' => $skpd->id,
             'bidang_id' => $bidang->id,
             'nama' => fake()->name(),
             'nip' => $nip,

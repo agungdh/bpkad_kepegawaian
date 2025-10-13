@@ -44,10 +44,71 @@
                 </div>
 
                 <div class="form-group col-6">
-                    @php($formName = 'pegawai')
-                    @php($formLabel = 'Pegawai')
+                    @php($formName = 'bidang')
+                    @php($formLabel = 'Bidang')
+                    <label for="{{$formName}}">{{$formLabel}}</label>
+                    <select type="text" class="form-control select2" id="{{$formName}}"
+                            :class="{'is-invalid': validationErrors.{{$formName}}}">
+                        <option value="">{{$formLabel}}</option>
+                        @foreach($bidangs as $bidang)
+                            <option value="{{$bidang->uuid}}">{{$bidang->skpd->skpd}} - {{$bidang->bidang}}</option>
+                        @endforeach
+                    </select>
+                    <template x-if="validationErrors.{{$formName}}">
+                        <div class="invalid-feedback" x-text="validationErrors.{{$formName}}"></div>
+                    </template>
+                    @push('scripts')
+                        <script>
+                            $(document).ready(function() {
+                                $('#{{$formName}}').change(function() {
+                                    formAlpine.formData.{{$formName}} = $(this).val();
+                                });
+                            });
+                        </script>
+                    @endpush
+                </div>
+
+                <div class="form-group col-6">
+                    @php($formName = 'nama')
+                    @php($formLabel = 'Nama')
                     <label for="{{$formName}}">{{$formLabel}}</label>
                     <input type="text" class="form-control" id="{{$formName}}" placeholder="{{$formLabel}}"
+                           x-model.lazy="formData.{{$formName}}"
+                           :class="{'is-invalid': validationErrors.{{$formName}}}">
+                    <template x-if="validationErrors.{{$formName}}">
+                        <div class="invalid-feedback" x-text="validationErrors.{{$formName}}"></div>
+                    </template>
+                </div>
+
+                <div class="form-group col-6">
+                    @php($formName = 'nip')
+                    @php($formLabel = 'NIP')
+                    <label for="{{$formName}}">{{$formLabel}}</label>
+                    <input type="text" class="form-control" id="{{$formName}}" placeholder="{{$formLabel}}"
+                           x-model.lazy="formData.{{$formName}}"
+                           :class="{'is-invalid': validationErrors.{{$formName}}}">
+                    <template x-if="validationErrors.{{$formName}}">
+                        <div class="invalid-feedback" x-text="validationErrors.{{$formName}}"></div>
+                    </template>
+                </div>
+
+                <div class="form-group col-6">
+                    @php($formName = 'password')
+                    @php($formLabel = 'Password')
+                    <label for="{{$formName}}">{{$formLabel}}</label>
+                    <input type="password" class="form-control" id="{{$formName}}" placeholder="{{$formLabel}}"
+                           x-model.lazy="formData.{{$formName}}"
+                           :class="{'is-invalid': validationErrors.{{$formName}}}">
+                    <template x-if="validationErrors.{{$formName}}">
+                        <div class="invalid-feedback" x-text="validationErrors.{{$formName}}"></div>
+                    </template>
+                </div>
+
+                <div class="form-group col-6">
+                    @php($formName = 'password_confirmation')
+                    @php($formLabel = 'Password Confirmation')
+                    <label for="{{$formName}}">{{$formLabel}}</label>
+                    <input type="password" class="form-control" id="{{$formName}}" placeholder="{{$formLabel}}"
                            x-model.lazy="formData.{{$formName}}"
                            :class="{'is-invalid': validationErrors.{{$formName}}}">
                     <template x-if="validationErrors.{{$formName}}">

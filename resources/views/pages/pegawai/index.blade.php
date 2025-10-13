@@ -23,8 +23,10 @@
                 <table class="table table-bordered table-sm table-hover table-striped" id="tabel">
                     <thead>
                     <tr>
+                        <th>Nama</th>
+                        <th>NIP</th>
                         <th>SKPD</th>
-                        <th>Pegawai</th>
+                        <th>Bidang</th>
                         <th>Aksi</th>
                     </tr>
                     </thead>
@@ -46,8 +48,10 @@
                     type: 'POST',
                 },
                 columns: [
+                    { data: 'nama', name: 'p.nama' },
+                    { data: 'nip', name: 'p.nip' },
                     { data: 'skpd', name: 's.skpd' },
-                    { data: 'pegawai', name: 'b.pegawai' },
+                    { data: 'bidang', name: 'b.bidang' },
                     { data: 'action', name: 'action', searchable: false, orderable: false }
                 ]
             });
