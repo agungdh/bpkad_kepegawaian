@@ -39,6 +39,5 @@ Alpine.data('skpd_form', () => ({
                 toastr.error('Terjadi kesalahan sistem. Silahkan refresh halaman ini. Jika error masih terjadi, silahkan hubungi Tim IT.');
             }
         }
-    }
-
+    },
 }));

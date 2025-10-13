@@ -9,7 +9,7 @@ Alpine.data('bidang_form', () => ({
         let res = await axios.get(`/bidang/${uuid}`);
         let data = res.data;
 
-        data.skpd = data.skpd.uuid
+        data.skpd = data.skpd.uuid;
 
         for (let key in this.formData) {
             if (data.hasOwnProperty(key)) {
@@ -44,6 +44,5 @@ Alpine.data('bidang_form', () => ({
                 toastr.error('Terjadi kesalahan sistem. Silahkan refresh halaman ini. Jika error masih terjadi, silahkan hubungi Tim IT.');
             }
         }
-    }
-
+    },
 }));
