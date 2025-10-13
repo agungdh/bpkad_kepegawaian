@@ -22,6 +22,7 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    @vite('resources/js/pages/auth/login.js')
     <style>
         body.login-page {
             background-image: url('/cristina-gottardi-CSpjU6hYo_0-unsplash.jpg');
@@ -115,36 +116,5 @@
 <script src="/assets/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/assets/AdminLTE-3.2.0/dist/js/adminlte.min.js"></script>
-<script>
-    document.addEventListener('alpine:init', () => {
-        Alpine.data('form', () => ({
-            formData: {
-                username: '',
-                password: ''
-            },
-            validationErrors: {},
-            isSubmitting: false,
-
-            async submit() {
-                try {
-                    this.isSubmitting = true;
-
-                    await axios.post('/login', this.formData);
-
-                    window.location.href = '/';
-                } catch (err) {
-                    if (err.response?.status === 422) {
-                        toastr.error('Username atau password salah');
-                    } else {
-                        toastr.error('Terjadi kesalahan saat mengirim data');
-                    }
-                } finally {
-                    this.isSubmitting = false;
-                }
-            }
-
-        }));
-    });
-</script>
 </body>
 </html>

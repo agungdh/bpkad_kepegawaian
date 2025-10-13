@@ -14,10 +14,10 @@
             </li>
 
             <li class="nav-item">
-                <a href="/pegawai" class="nav-link">
+                <a href="/skpd" class="nav-link">
                     <i class="nav-icon fas fa-home"></i>
                     <p>
-                        Pegawai
+                        SKPD
                     </p>
                 </a>
             </li>

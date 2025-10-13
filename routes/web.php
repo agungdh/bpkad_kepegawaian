@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SkpdController;
 use App\Models\Bidang;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profil', [DashboardController::class, 'profil']);
     Route::post('/profil', [DashboardController::class, 'profilData']);
     Route::put('/profil', [DashboardController::class, 'profilUpdate']);
+
+    Route::post('/skpd/datatable', [SkpdController::class, 'datatable']);
+    Route::resource('/skpd', SkpdController::class);
 
     //    Route::post('/pegawai/datatable', [PegawaiController::class, 'datatable']);
     //    Route::resource('/pegawai', PegawaiController::class);
