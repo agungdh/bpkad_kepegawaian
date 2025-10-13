@@ -11,7 +11,7 @@
 
 @section('content')
     <!-- Default box -->
-    <div class="card" x-data="form" id="formComponent">
+    <div class="card" x-data="skpd_form" id="formComponent">
         <div class="card-header">
             <h3 class="card-title">{{ isset($skpd) ? 'Ubah' : 'Tambah' }} Data SKPD</h3>
         </div>
@@ -44,55 +44,10 @@
 @endsection
 
 @push('scripts')
+    @vite('resources/js/pages/skpd/form.js')
+
     <script>
         uuid = @json($skpd?->uuid ?? null);
-
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('form', () => ({
-                formData: {
-                    skpd: '',
-                },
-                validationErrors: {},
-
-                async initData(uuid) {
-                    let res = await axios.get(`/skpd/${uuid}`);
-                    let data = res.data;
-
-                    for (let key in this.formData) {
-                        if (data.hasOwnProperty(key)) {
-                            this.formData[key] = data[key];
-                        }
-                    }
-                },
-
-                async submit() {
-                    let formData = new FormData();
-
-                    for (let key in this.formData) {
-                        formData.append(key, this.formData[key]);
-                    }
-
-                    try {
-                        if (uuid) {
-                            formData.append('_method', 'PUT');
-
-                            await axios.post(`/skpd/${uuid}`, formData);
-                        } else {
-                            await axios.post('/skpd', formData);
-                        }
-
-                        window.location.href = '/skpd';
-                    } catch (err) {
-                        if (err.response?.status === 422) {
-                            this.validationErrors = err.response.data.errors ?? {};
-                        } else {
-                            toastr.error('Terjadi kesalahan sistem. Silahkan refresh halaman ini. Jika error masih terjadi, silahkan hubungi Tim IT.');
-                        }
-                    }
-                }
-
-            }));
-        });
 
         $(document).ready(function() {
             formComponent = document.getElementById('formComponent');
