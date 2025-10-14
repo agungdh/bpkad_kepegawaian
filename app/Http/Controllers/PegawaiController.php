@@ -63,7 +63,7 @@ class PegawaiController extends Controller
     public function store(Request $request)
     {
         DB::transaction(function () use ($request) {
-            $data = $this->validatedStore($request);
+            $data = $this->validated($request);
 
             $user = User::create([
                 'username' => $data['nip'],
@@ -115,7 +115,7 @@ class PegawaiController extends Controller
     public function update(Request $request, Pegawai $pegawai)
     {
         DB::transaction(function () use ($request, $pegawai) {
-            $data = $this->validatedUpdate($request, $pegawai);
+            $data = $this->validated($request, $pegawai);
 
             $userData = [
                 'username' => $data['nip'],
@@ -149,8 +149,10 @@ class PegawaiController extends Controller
         });
     }
 
-    private function validatedStore(Request $request)
+    private function validated(Request $request, ?Pegawai $pegawai = null)
     {
+        $isUpdate = $pegawai !== null;
+
         $data = $request->validate([
             'skpd' => 'required|exists:skpds,uuid',
             'bidang' => [
@@ -158,54 +160,27 @@ class PegawaiController extends Controller
                 'exists:bidangs,uuid',
                 function ($attribute, $value, $fail) use ($request) {
                     if (Bidang::query()->findOrFailByUuid($value)->skpd->uuid != $request->skpd) {
-                        $fail('The Bidang is not matched the SKPD.');
+                        $fail('The Bidang is not matched with the SKPD.');
                     }
                 },
             ],
-            'nama' => 'required',
-            'nip' => 'required|numeric|unique:pegawais,nip|unique:users,username',
-            'password' => 'required|confirmed',
-            'password_confirmation' => 'required|same:password',
-        ]);
-
-        $data['skpd_id'] = Skpd::query()->findOrFailByUuid($data['skpd'])->id;
-        $data['bidang_id'] = Bidang::query()->findOrFailByUuid($data['bidang'])->id;
-
-        unset($data['skpd']);
-        unset($data['bidang']);
-
-        return $data;
-    }
-
-    private function validatedUpdate(Request $request, Pegawai $pegawai)
-    {
-        $data = $request->validate([
-            'skpd' => 'required|exists:skpds,uuid',
-            'bidang' => [
-                'required',
-                'exists:bidangs,uuid',
-                function ($attribute, $value, $fail) use ($request) {
-                    if (Bidang::query()->findOrFailByUuid($value)->skpd->uuid != $request->skpd) {
-                        $fail('The Bidang is not matched the SKPD.');
-                    }
-                },
-            ],
-            'nama' => 'required',
+            'nama' => 'required|string',
             'nip' => [
                 'required',
                 'numeric',
-                Rule::unique('pegawais', 'nip')->ignore($pegawai->id),
-                Rule::unique('users', 'username')->ignore($pegawai->user->id),
+                // rule unique bisa adaptif
+                Rule::unique('pegawais', 'nip')->ignore($pegawai?->id),
+                Rule::unique('users', 'username')->ignore($pegawai?->user?->id),
             ],
-            'password' => 'nullable|confirmed',
-            'password_confirmation' => 'nullable|same:password',
+            // password rules bisa beda antara create/update
+            'password' => [$isUpdate ? 'nullable' : 'required', 'confirmed'],
+            'password_confirmation' => [$isUpdate ? 'nullable' : 'required', 'same:password'],
         ]);
 
         $data['skpd_id'] = Skpd::query()->findOrFailByUuid($data['skpd'])->id;
         $data['bidang_id'] = Bidang::query()->findOrFailByUuid($data['bidang'])->id;
 
-        unset($data['skpd']);
-        unset($data['bidang']);
+        unset($data['skpd'], $data['bidang']);
 
         return $data;
     }
