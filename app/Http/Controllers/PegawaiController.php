@@ -109,6 +109,7 @@ class PegawaiController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
      * @throws Throwable
      */
     public function update(Request $request, Pegawai $pegawai)
@@ -122,9 +123,9 @@ class PegawaiController extends Controller
             if ($request->password) {
                 $userData['password'] = $data['password'];
             }
-             $pegawai->user->update($userData);
+            $pegawai->user->update($userData);
 
-             $pegawai->update([
+            $pegawai->update([
                 'skpd_id' => $data['skpd_id'],
                 'bidang_id' => $data['bidang_id'],
                 'nama' => $data['nama'],
