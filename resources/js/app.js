@@ -14,3 +14,18 @@ window.emptySelectWithPlaceholder = (element, placeholder) => {
     element.empty();
     element.append(new Option(placeholder, ''));
 }
+
+window.emptySelectWithPlaceholderAndInit = (element, placeholder) => {
+    emptySelectWithPlaceholder(element, placeholder);
+    element.val('').change();
+}
+
+window.selectWithDatasetAndInit = (element, placeholder, data) => {
+    emptySelectWithPlaceholder(element, placeholder);
+
+    for (let i = 0; i < data.length; i++) {
+        element.append(new Option(data[i].bidang, data[i].uuid));
+    }
+
+    element.val('').change();
+}

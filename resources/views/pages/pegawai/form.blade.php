@@ -130,14 +130,14 @@
     <script>
         uuid = @json($pegawai?->uuid ?? null);
 
-        $(document).ready(function() {
+        $(document).ready(async function() {
             formComponent = document.getElementById('formComponent');
 
             formAlpine = Alpine.$data(formComponent);
 
             uuid && formAlpine.initData(uuid);
 
-            formAlpine.initSelect2();
+            await formAlpine.initSelect2();
         });
     </script>
 @endpush
