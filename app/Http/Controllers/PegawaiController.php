@@ -47,11 +47,9 @@ class PegawaiController extends Controller
     public function create()
     {
         $skpds = Skpd::query()->get();
-        $bidangs = Bidang::query()->get();
 
         return view('pages.pegawai.form', compact([
             'skpds',
-            'bidangs',
         ]));
     }
 
@@ -98,12 +96,10 @@ class PegawaiController extends Controller
     public function edit(Pegawai $pegawai)
     {
         $skpds = Skpd::query()->get();
-        $bidangs = Bidang::query()->get();
 
         return view('pages.pegawai.form', compact([
             'pegawai',
             'skpds',
-            'bidangs',
         ]));
     }
 

@@ -2,21 +2,11 @@
 
 use App\Http\Controllers\BidangController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HelperController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\SkpdController;
 use App\Models\Bidang;
 use Illuminate\Support\Facades\Route;
-
-Route::get('/tehe', function () {
-    $bidang = Bidang::with('pegawais.bidang.pegawais.user')->findByUuid('f7ef94f9-441d-44d5-83ab-f4b41f7beb2a');
-
-    //    dd($bidang);
-    return $bidang;
-    $bidangs = Bidang::with('pegawais.bidang.pegawais.user')->get();
-
-    //    dd($bidangs->first()->pegawais->first()->user);
-    return $bidangs;
-});
 
 Route::redirect('/', '/dashboard')->name('home');
 
@@ -27,14 +17,24 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profil', [DashboardController::class, 'profilData']);
     Route::put('/profil', [DashboardController::class, 'profilUpdate']);
 
-    Route::post('/skpd/datatable', [SkpdController::class, 'datatable']);
-    Route::resource('/skpd', SkpdController::class);
+    Route::group(['prefix' => '/helper'], function () {
+        Route::post('/getBidangBySkpd/{skpd}', [HelperController::class, 'getBidangBySkpd']);
+    });
 
-    Route::post('/bidang/datatable', [BidangController::class, 'datatable']);
-    Route::resource('/bidang', BidangController::class);
+    Route::group(['prefix' => '/skpd'], function () {
+        Route::post('/datatable', [SkpdController::class, 'datatable']);
+        Route::resource('/', SkpdController::class);
+    });
 
-    Route::post('/pegawai/datatable', [PegawaiController::class, 'datatable']);
-    Route::resource('/pegawai', PegawaiController::class);
+    Route::group(['prefix' => '/bidang'], function () {
+        Route::post('/datatable', [BidangController::class, 'datatable']);
+        Route::resource('/', BidangController::class);
+    });
+
+    Route::group(['prefix' => '/pegawai'], function () {
+        Route::post('/datatable', [PegawaiController::class, 'datatable']);
+        Route::resource('/', PegawaiController::class);
+    });
 });
 
 require __DIR__.'/auth.php';
