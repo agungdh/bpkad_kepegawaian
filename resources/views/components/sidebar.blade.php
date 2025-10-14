@@ -1,47 +1,40 @@
 <!-- Sidebar -->
 <div class="sidebar">
-    <!-- Sidebar Menu -->
     <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
+            {{-- Dashboard --}}
             <li class="nav-item">
-                <a href="/dashboard" class="nav-link">
-                    <i class="nav-icon fas fa-home"></i>
-                    <p>
-                        Dashboard
-                    </p>
+                <a href="/dashboard" class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <p>Dashboard</p>
                 </a>
             </li>
 
+            {{-- SKPD --}}
             <li class="nav-item">
-                <a href="/skpd" class="nav-link">
-                    <i class="nav-icon fas fa-home"></i>
-                    <p>
-                        SKPD
-                    </p>
+                <a href="/skpd" class="nav-link {{ Request::is('skpd*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-building"></i>
+                    <p>SKPD</p>
                 </a>
             </li>
 
+            {{-- Bidang --}}
             <li class="nav-item">
-                <a href="/bidang" class="nav-link">
-                    <i class="nav-icon fas fa-home"></i>
-                    <p>
-                        Bidang
-                    </p>
+                <a href="/bidang" class="nav-link {{ Request::is('bidang*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-sitemap"></i>
+                    <p>Bidang</p>
                 </a>
             </li>
 
+            {{-- Pegawai --}}
             <li class="nav-item">
-                <a href="/pegawai" class="nav-link">
-                    <i class="nav-icon fas fa-home"></i>
-                    <p>
-                        Pegawai
-                    </p>
+                <a href="/pegawai" class="nav-link {{ Request::is('pegawai*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>Pegawai</p>
                 </a>
             </li>
 
         </ul>
     </nav>
-    <!-- /.sidebar-menu -->
 </div>
-<!-- /.sidebar -->
