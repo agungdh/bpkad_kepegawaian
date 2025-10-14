@@ -2,7 +2,6 @@ import Alpine from 'alpinejs';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import toastr from 'toastr';
-import JQuery from 'jquery';
 window.Alpine = Alpine;
 window.axios = axios;
 window.Swal = Swal;
@@ -13,12 +12,12 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.emptySelectWithPlaceholder = (element, placeholder) => {
     element.empty();
     element.append(new Option(placeholder, ''));
-}
+};
 
 window.emptySelectWithPlaceholderAndInit = (element, placeholder) => {
     emptySelectWithPlaceholder(element, placeholder);
     element.val('').change();
-}
+};
 
 window.selectWithDatasetAndInit = (element, placeholder, data) => {
     emptySelectWithPlaceholder(element, placeholder);
@@ -28,4 +27,4 @@ window.selectWithDatasetAndInit = (element, placeholder, data) => {
     }
 
     element.val('').change();
-}
+};

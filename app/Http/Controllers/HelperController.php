@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 
 class HelperController extends Controller
 {
-    public function getBidangBySkpd(Request $request, Skpd $skpd) {
+    public function getBidangBySkpd(Request $request, Skpd $skpd)
+    {
         return $skpd->bidangs;
     }
 }

@@ -52,24 +52,24 @@ Alpine.data('pegawai_form', () => ({
     },
 
     async initSelect2() {
-        let initData = await init()
+        let initData = await init();
 
         async function init() {
             let bidangElement = $('#bidang');
 
-            emptySelectWithPlaceholderAndInit(bidangElement, 'Pilih SKPD Terlebih Dahulu')
+            emptySelectWithPlaceholderAndInit(bidangElement, 'Pilih SKPD Terlebih Dahulu');
 
-            $("#skpd").change(async function () {
+            $('#skpd').change(async function () {
                 await onSkpdChange($(this).val(), bidangElement);
-            })
+            });
 
-            return {bidangElement}
+            return { bidangElement };
         }
 
         async function onSkpdChange(skpd, bidangElement) {
-            let res = await axios.post(`/helper/getBidangBySkpd/${skpd}`)
+            let res = await axios.post(`/helper/getBidangBySkpd/${skpd}`);
 
-            selectWithDatasetAndInit(bidangElement, 'Pilih Bidang', res.data)
+            selectWithDatasetAndInit(bidangElement, 'Pilih Bidang', res.data);
         }
-    }
+    },
 }));

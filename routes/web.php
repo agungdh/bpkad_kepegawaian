@@ -5,7 +5,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\SkpdController;
-use App\Models\Bidang;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/dashboard')->name('home');
