@@ -16,24 +16,18 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profil', [DashboardController::class, 'profilData']);
     Route::put('/profil', [DashboardController::class, 'profilUpdate']);
 
-    Route::group(['prefix' => '/helper'], function () {
+    Route::prefix('/helper')->group(function () {
         Route::post('/getBidangBySkpd/{skpd}', [HelperController::class, 'getBidangBySkpd']);
     });
 
-    Route::group(['prefix' => '/skpd'], function () {
-        Route::post('/datatable', [SkpdController::class, 'datatable']);
-        Route::resource('/', SkpdController::class);
-    });
+    Route::post('/skpd/datatable', [SkpdController::class, 'datatable']);
+    Route::resource('/skpd', SkpdController::class);
 
-    Route::group(['prefix' => '/bidang'], function () {
-        Route::post('/datatable', [BidangController::class, 'datatable']);
-        Route::resource('/', BidangController::class);
-    });
+    Route::post('/bidang/datatable', [BidangController::class, 'datatable']);
+    Route::resource('/bidang', BidangController::class);
 
-    Route::group(['prefix' => '/pegawai'], function () {
-        Route::post('/datatable', [PegawaiController::class, 'datatable']);
-        Route::resource('/', PegawaiController::class);
-    });
+    Route::post('/pegawai/datatable', [PegawaiController::class, 'datatable']);
+    Route::resource('/pegawai', PegawaiController::class);
 });
 
 require __DIR__.'/auth.php';
