@@ -8,6 +8,7 @@ use App\Models\Skpd;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Throwable;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -62,7 +63,7 @@ class PegawaiController extends Controller
     public function store(Request $request)
     {
         DB::transaction(function () use ($request) {
-            $data = $this->validated($request);
+            $data = $this->validatedStore($request);
 
             $user = User::create([
                 'username' => $data['nip'],
@@ -86,7 +87,7 @@ class PegawaiController extends Controller
      */
     public function show(Pegawai $pegawai)
     {
-        $pegawai->load('skpd');
+        $pegawai->load('bidang.skpd', 'skpd');
 
         return $pegawai;
     }
@@ -108,10 +109,28 @@ class PegawaiController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @throws Throwable
      */
     public function update(Request $request, Pegawai $pegawai)
     {
-        $pegawai->update($this->validated($request));
+        DB::transaction(function () use ($request, $pegawai) {
+            $data = $this->validatedUpdate($request, $pegawai);
+
+            $userData = [
+                'username' => $data['nip'],
+            ];
+            if ($request->password) {
+                $userData['password'] = $data['password'];
+            }
+             $pegawai->user->update($userData);
+
+             $pegawai->update([
+                'skpd_id' => $data['skpd_id'],
+                'bidang_id' => $data['bidang_id'],
+                'nama' => $data['nama'],
+                'nip' => $data['nip'],
+            ]);
+        });
 
         $request->session()->flash('success', 'Pegawai berhasil disimpan.');
     }
@@ -129,7 +148,7 @@ class PegawaiController extends Controller
         });
     }
 
-    private function validated(Request $request)
+    private function validatedStore(Request $request)
     {
         $data = $request->validate([
             'skpd' => 'required|exists:skpds,uuid',
@@ -146,6 +165,39 @@ class PegawaiController extends Controller
             'nip' => 'required|numeric|unique:pegawais,nip|unique:users,username',
             'password' => 'required|confirmed',
             'password_confirmation' => 'required|same:password',
+        ]);
+
+        $data['skpd_id'] = Skpd::query()->findOrFailByUuid($data['skpd'])->id;
+        $data['bidang_id'] = Bidang::query()->findOrFailByUuid($data['bidang'])->id;
+
+        unset($data['skpd']);
+        unset($data['bidang']);
+
+        return $data;
+    }
+
+    private function validatedUpdate(Request $request, Pegawai $pegawai)
+    {
+        $data = $request->validate([
+            'skpd' => 'required|exists:skpds,uuid',
+            'bidang' => [
+                'required',
+                'exists:bidangs,uuid',
+                function ($attribute, $value, $fail) use ($request) {
+                    if (Bidang::query()->findOrFailByUuid($value)->skpd->uuid != $request->skpd) {
+                        $fail('The Bidang is not matched the SKPD.');
+                    }
+                },
+            ],
+            'nama' => 'required',
+            'nip' => [
+                'required',
+                'numeric',
+                Rule::unique('pegawais', 'nip')->ignore($pegawai->id),
+                Rule::unique('users', 'username')->ignore($pegawai->user->id),
+            ],
+            'password' => 'nullable|confirmed',
+            'password_confirmation' => 'nullable|same:password',
         ]);
 
         $data['skpd_id'] = Skpd::query()->findOrFailByUuid($data['skpd'])->id;

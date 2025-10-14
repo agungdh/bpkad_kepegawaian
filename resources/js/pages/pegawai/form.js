@@ -1,7 +1,11 @@
 Alpine.data('pegawai_form', () => ({
     formData: {
         skpd: '',
-        pegawai: '',
+        bidang: '',
+        nip: '',
+        nama: '',
+        password: '',
+        password_confirmation: '',
     },
     validationErrors: {},
 
@@ -10,6 +14,7 @@ Alpine.data('pegawai_form', () => ({
         let data = res.data;
 
         data.skpd = data.skpd.uuid;
+        data.bidang = data.bidang.uuid;
 
         for (let key in this.formData) {
             if (data.hasOwnProperty(key)) {
@@ -18,6 +23,7 @@ Alpine.data('pegawai_form', () => ({
         }
 
         $('#skpd').val(data.skpd).change();
+        $('#bidang').val(data.bidang).change();
     },
 
     async submit() {

@@ -14,12 +14,18 @@ class Pegawai extends Model
 
     protected $hidden = [
         'user_id',
+        'skpd_id',
         'bidang_id',
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function skpd(): BelongsTo
+    {
+        return $this->belongsTo(Skpd::class);
     }
 
     public function bidang(): BelongsTo
