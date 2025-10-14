@@ -23,7 +23,6 @@ Alpine.data('pegawai_form', () => ({
         }
 
         $('#skpd').val(data.skpd).change();
-        $('#bidang').val(data.bidang).change();
     },
 
     async submit() {
@@ -51,4 +50,23 @@ Alpine.data('pegawai_form', () => ({
             }
         }
     },
+
+    initSelect2() {
+        let initData = init()
+        onSkpdChange(initData.bidangElement);
+
+        function onSkpdChange(bidangElement) {
+            console.log(bidangElement)
+        }
+
+        function init() {
+            let bidangElement = $('#bidang');
+
+            emptySelectWithPlaceholder(bidangElement, 'Pilih SKPD Terlebih Dahulu')
+
+            bidangElement.val('').change();
+
+            return {bidangElement}
+        }
+    }
 }));

@@ -48,12 +48,7 @@
                     @php($formLabel = 'Bidang')
                     <label for="{{$formName}}">{{$formLabel}}</label>
                     <select type="text" class="form-control select2" id="{{$formName}}"
-                            :class="{'is-invalid': validationErrors.{{$formName}}}">
-                        <option value="">{{$formLabel}}</option>
-                        @foreach($bidangs as $bidang)
-                            <option value="{{$bidang->uuid}}">{{$bidang->skpd->skpd}} - {{$bidang->bidang}}</option>
-                        @endforeach
-                    </select>
+                            :class="{'is-invalid': validationErrors.{{$formName}}}" ></select>
                     <template x-if="validationErrors.{{$formName}}">
                         <div class="invalid-feedback" x-text="validationErrors.{{$formName}}"></div>
                     </template>
@@ -141,6 +136,8 @@
             formAlpine = Alpine.$data(formComponent);
 
             uuid && formAlpine.initData(uuid);
+
+            formAlpine.initSelect2();
         });
     </script>
 @endpush
