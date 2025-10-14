@@ -16,6 +16,7 @@
         "laravolt/avatar": "^6.3",
         "livewire/flux": "^2.1.1",
         "livewire/volt": "^1.7.0",
+        "opcodesio/log-viewer": "^3.19",
         "spatie/laravel-permission": "^6.21",
         "yajra/laravel-datatables-oracle": "^12.0"
     },
