@@ -18,11 +18,6 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="/assets/AdminLTE-3.2.0/dist/css/adminlte.min.css">
 
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    @vite('resources/js/pages/auth/login.js')
     <style>
         body.login-page {
             background-image: url('/cristina-gottardi-CSpjU6hYo_0-unsplash.jpg');
@@ -48,6 +43,11 @@
         }
     </style>
 
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    @vite('resources/js/pages/auth/login.js')
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
