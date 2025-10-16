@@ -1,4 +1,8 @@
 Alpine.data('pegawai_form', () => ({
+    alreadyInit: {
+        bidang: false,
+    },
+
     formData: {
         skpd: '',
         bidang: '',
@@ -52,10 +56,10 @@ Alpine.data('pegawai_form', () => ({
     },
 
     async initSelect2() {
+        var that = this
         let initData = await init();
 
         async function init() {
-            console.log({ uuid });
             let bidangElement = $('#bidang');
 
             $('#skpd').change(async function () {
@@ -70,10 +74,12 @@ Alpine.data('pegawai_form', () => ({
             if (skpd) {
                 let res = await axios.post(`/helper/getBidangBySkpd/${skpd}`);
 
-                selectWithDatasetAndInit(bidangElement, 'Pilih Bidang', res.data);
+                selectWithDatasetAndInit(bidangElement, 'Pilih Bidang', res.data, !that.alreadyInit.bidang ? that.formData.bidang : '');
             } else {
                 emptySelectWithPlaceholderAndInit(bidangElement, 'Pilih SKPD Terlebih Dahulu');
             }
+
+            that.alreadyInit.bidang = true
         }
     },
 }));

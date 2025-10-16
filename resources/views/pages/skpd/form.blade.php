@@ -49,12 +49,12 @@
     <script>
         uuid = @json($skpd?->uuid ?? null);
 
-        $(document).ready(function() {
+        $(document).ready(async function() {
             formComponent = document.getElementById('formComponent');
 
             formAlpine = Alpine.$data(formComponent);
 
-            uuid && formAlpine.initData(uuid);
+            uuid && await formAlpine.initData(uuid);
         });
     </script>
 @endpush

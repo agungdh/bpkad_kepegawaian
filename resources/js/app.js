@@ -14,9 +14,9 @@ window.emptySelectWithPlaceholder = (element, placeholder) => {
     element.append(new Option(placeholder, ''));
 };
 
-window.emptySelectWithPlaceholderAndInit = (element, placeholder) => {
+window.emptySelectWithPlaceholderAndInit = (element, placeholder, value = '') => {
     emptySelectWithPlaceholder(element, placeholder);
-    element.val('').change();
+    element.val(value).change();
 };
 
 window.selectWithDataset = (element, placeholder, data) => {
@@ -27,8 +27,8 @@ window.selectWithDataset = (element, placeholder, data) => {
     }
 };
 
-window.selectWithDatasetAndInit = (element, placeholder, data) => {
+window.selectWithDatasetAndInit = (element, placeholder, data, value = '') => {
     selectWithDataset(element, placeholder, data);
 
-    element.val('').change();
+    element.val(value).change();
 };

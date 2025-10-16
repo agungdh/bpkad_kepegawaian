@@ -135,7 +135,7 @@
 
             formAlpine = Alpine.$data(formComponent);
 
-            uuid && formAlpine.initData(uuid);
+            uuid && await formAlpine.initData(uuid);
 
             await formAlpine.initSelect2();
         });
