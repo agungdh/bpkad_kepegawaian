@@ -77,6 +77,10 @@
         ],
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
+        ],
+        "format": [
+            "./vendor/bin/pint",
+            "npm run format"
         ]
     },
     "extra": {
