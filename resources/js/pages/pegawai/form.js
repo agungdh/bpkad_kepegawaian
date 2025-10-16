@@ -55,6 +55,7 @@ Alpine.data('pegawai_form', () => ({
         let initData = await init();
 
         async function init() {
+            console.log({uuid})
             let bidangElement = $('#bidang');
 
             $('#skpd').change(async function () {
