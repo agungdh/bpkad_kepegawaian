@@ -7,12 +7,6 @@ use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\SkpdController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/test', function () {
-    $sessions = DB::table('sessions')->get();
-
-    return $sessions;
-});
-
 Route::redirect('/', '/dashboard')->name('home');
 
 Route::middleware(['auth'])->group(function () {
