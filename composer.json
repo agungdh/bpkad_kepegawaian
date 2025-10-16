@@ -81,6 +81,13 @@
         "format": [
             "./vendor/bin/pint",
             "npm run format"
+        ],
+        "diff": [
+            "./diff.sh"
+        ],
+        "fd": [
+            "composer format",
+            "composer diff"
         ]
     },
     "extra": {
