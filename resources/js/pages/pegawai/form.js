@@ -56,7 +56,7 @@ Alpine.data('pegawai_form', () => ({
     },
 
     async initSelect2() {
-        var that = this
+        var that = this;
         let initData = await init();
 
         async function init() {
@@ -79,7 +79,7 @@ Alpine.data('pegawai_form', () => ({
                 emptySelectWithPlaceholderAndInit(bidangElement, 'Pilih SKPD Terlebih Dahulu');
             }
 
-            that.alreadyInit.bidang = true
+            that.alreadyInit.bidang = true;
         }
     },
 }));
