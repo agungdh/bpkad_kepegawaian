@@ -1,12 +1,20 @@
 Alpine.data('form', () => ({
     formData: {
+        nip: '',
+        nama: '',
         skpd: '',
+        bidang: '',
+        password: '',
+        password_confirmation: '',
     },
     validationErrors: {},
 
-    async initData(uuid) {
-        let res = await axios.get(`/skpd/${uuid}`);
+    async initData() {
+        let res = await axios.post(`/profil`);
         let data = res.data;
+
+        data.skpd = data.skpd.skpd;
+        data.bidang = data.bidang.bidang;
 
         for (let key in this.formData) {
             if (data.hasOwnProperty(key)) {
@@ -16,22 +24,10 @@ Alpine.data('form', () => ({
     },
 
     async submit() {
-        let formData = new FormData();
-
-        for (let key in this.formData) {
-            formData.append(key, this.formData[key]);
-        }
-
         try {
-            if (uuid) {
-                formData.append('_method', 'PUT');
+            await axios.put('/profil', this.formData);
 
-                await axios.post(`/skpd/${uuid}`, formData);
-            } else {
-                await axios.post('/skpd', formData);
-            }
-
-            window.location.href = '/skpd';
+            window.location.href = '/profil';
         } catch (err) {
             if (err.response?.status === 422) {
                 this.validationErrors = err.response.data.errors ?? {};

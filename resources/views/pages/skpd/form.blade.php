@@ -11,7 +11,7 @@
 
 @section('content')
     <!-- Default box -->
-    <div class="card" x-data="skpd_form" id="formComponent">
+    <div class="card" x-data="form" id="formComponent">
         <div class="card-header">
             <h3 class="card-title">{{ isset($skpd) ? 'Ubah' : 'Tambah' }} Data SKPD</h3>
         </div>

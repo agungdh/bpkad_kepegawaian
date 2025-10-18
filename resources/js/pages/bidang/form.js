@@ -1,4 +1,4 @@
-Alpine.data('bidang_form', () => ({
+Alpine.data('form', () => ({
     formData: {
         skpd: '',
         bidang: '',

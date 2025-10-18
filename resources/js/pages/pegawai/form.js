@@ -1,4 +1,4 @@
-Alpine.data('pegawai_form', () => ({
+Alpine.data('form', () => ({
     alreadyInit: {
         bidang: false,
     },

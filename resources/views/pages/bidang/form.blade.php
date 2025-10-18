@@ -11,7 +11,7 @@
 
 @section('content')
     <!-- Default box -->
-    <div class="card" x-data="bidang_form" id="formComponent">
+    <div class="card" x-data="form" id="formComponent">
         <div class="card-header">
             <h3 class="card-title">{{ isset($bidang) ? 'Ubah' : 'Tambah' }} Data Bidang</h3>
         </div>
