@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bidang;
-use App\Models\PangkatGolongan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Throwable;
 
 class DashboardController extends Controller
 {
@@ -22,13 +21,8 @@ class DashboardController extends Controller
     {
         $pegawai = Auth::user()->pegawai;
 
-        $bidangs = Bidang::all();
-        $pangkats = PangkatGolongan::select(['id', 'pangkat', 'golongan', 'ruang'])->get();
-
         return view('pages.profil', compact([
             'pegawai',
-            'bidangs',
-            'pangkats',
         ]));
     }
 
@@ -36,43 +30,48 @@ class DashboardController extends Controller
     {
         $pegawai = Auth::user()->pegawai;
 
+        $pegawai->load([
+            'skpd',
+            'bidang',
+        ]);
+
         return $pegawai;
     }
 
+    /**
+     * @throws Throwable
+     */
     public function profilUpdate(Request $request)
     {
         $pegawai = Auth::user()->pegawai;
 
-        $user = $pegawai->user;
-
-        $request->validate([
+        $data = $request->validate([
+            'nama' => 'required|string',
             'nip' => [
                 'required',
-                'integer',
-                Rule::unique('pegawais', 'nip')->ignore($pegawai->id),
-                Rule::unique('users', 'username')->ignore($user->id),
+                'numeric',
+                // rule unique bisa adaptif
+                Rule::unique('pegawais', 'nip')->ignore($pegawai?->id),
+                Rule::unique('users', 'username')->ignore($pegawai?->user?->id),
             ],
-            'nama' => 'required',
-            'password' => 'confirmed',
-            'bidang_id' => 'required|exists:bidangs,id',
-            'pangkat_golongan_id' => 'nullable|exists:pangkat_golongans,id',
+            // password rules bisa beda antara create/update
+            'password' => ['nullable', 'confirmed'],
+            'password_confirmation' => ['nullable', 'same:password'],
         ]);
 
-        DB::transaction(function () use ($request, $pegawai, $user) {
-            $user->username = $request->nip;
-            if ($request->password) {
-                $user->password = $request->password;
+        DB::transaction(function () use ($data, $pegawai) {
+            $userData = [
+                'username' => $data['nip'],
+            ];
+            if ($data['password']) {
+                $userData['password'] = $data['password'];
             }
-            $user->save();
+            $pegawai->user->update($userData);
 
-            $pegawai->user_id = $user->id;
-            $pegawai->nip = $request->nip;
-            $pegawai->nama = $request->nama;
-            $pegawai->pangkat_golongan_id = $request->pangkat_golongan_id;
-            $pegawai->jabatan = $request->jabatan;
-            $pegawai->peran = $request->peran;
-            $pegawai->bidang_id = $request->bidang_id;
-            $pegawai->save();
+            $pegawai->update([
+                'nama' => $data['nama'],
+                'nip' => $data['nip'],
+            ]);
         });
 
         $request->session()->flash('success', 'Profil berhasil disimpan.');

@@ -116,7 +116,7 @@ class PegawaiController extends Controller
             $userData = [
                 'username' => $data['nip'],
             ];
-            if ($request->password) {
+            if ($data['password']) {
                 $userData['password'] = $data['password'];
             }
             $pegawai->user->update($userData);

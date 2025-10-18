@@ -25,12 +25,13 @@ class PegawaiSeeder extends Seeder
     private function createAdmin()
     {
         $user = User::factory()->create([
-            'username' => 'admin',
+            'username' => '1234',
+            'password' => '1234',
         ]);
 
         $pegawai = Pegawai::factory()->create([
             'user_id' => $user->id,
-            'nip' => 'admin',
+            'nip' => '1234',
             'nama' => 'Admin',
         ]);
         $user->assignRole('admin');
@@ -39,12 +40,13 @@ class PegawaiSeeder extends Seeder
     private function createPegawai()
     {
         $user = User::factory()->create([
-            'username' => 'pegawai',
+            'username' => '5678',
+            'password' => '5678',
         ]);
 
         $pegawai = Pegawai::factory()->create([
             'user_id' => $user->id,
-            'nip' => 'pegawai',
+            'nip' => '5678',
             'nama' => 'Pegawai',
         ]);
         $user->assignRole('pegawai');

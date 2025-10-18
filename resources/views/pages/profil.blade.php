@@ -43,44 +43,10 @@
                 </div>
 
                 <div class="form-group col-6">
-                    @php($formName = 'bidang_id')
-                    @php($formLabel = 'Bidang')
+                    @php($formName = 'skpd')
+                    @php($formLabel = 'SKPD')
                     <label for="{{$formName}}">{{$formLabel}}</label>
-                    <select type="text" class="form-control" id="{{$formName}}" x-model.lazy="formData.{{$formName}}"
-                            :class="{'is-invalid': validationErrors.{{$formName}}}">
-                        <option value="">{{$formLabel}}</option>
-                        @foreach ($bidangs as $bidang)
-                            <option value="{{ $bidang->id }}">{{$bidang->bidang}}</option>
-                        @endforeach
-                    </select>
-                    <template x-if="validationErrors.{{$formName}}">
-                        <div class="invalid-feedback" x-text="validationErrors.{{$formName}}"></div>
-                    </template>
-                </div>
-
-                <div class="form-group col-6">
-                    @php($formName = 'pangkat_golongan_id')
-                    @php($formLabel = 'Pangkat Golongan')
-                    <label for="{{$formName}}">{{$formLabel}}</label>
-                    <select type="text" class="form-control" id="{{$formName}}" x-model.lazy="formData.{{$formName}}"
-                            :class="{'is-invalid': validationErrors.{{$formName}}}">
-                        <option value="">{{$formLabel}}</option>
-                        @foreach ($pangkats as $pangkat)
-                            <option value="{{ $pangkat->id }}">{{$pangkat->pangkat}} ({{$pangkat->golongan}}
-                                /{{$pangkat->ruang}})
-                            </option>
-                        @endforeach
-                    </select>
-                    <template x-if="validationErrors.{{$formName}}">
-                        <div class="invalid-feedback" x-text="validationErrors.{{$formName}}"></div>
-                    </template>
-                </div>
-
-                <div class="form-group col-6">
-                    @php($formName = 'jabatan')
-                    @php($formLabel = 'Jabatan')
-                    <label for="{{$formName}}">{{$formLabel}}</label>
-                    <input type="text" class="form-control" id="{{$formName}}" placeholder="{{$formLabel}}"
+                    <input readonly type="text" class="form-control" id="{{$formName}}" placeholder="{{$formLabel}}"
                            x-model.lazy="formData.{{$formName}}"
                            :class="{'is-invalid': validationErrors.{{$formName}}}">
                     <template x-if="validationErrors.{{$formName}}">
@@ -89,10 +55,10 @@
                 </div>
 
                 <div class="form-group col-6">
-                    @php($formName = 'peran')
-                    @php($formLabel = 'Peran')
+                    @php($formName = 'bidang')
+                    @php($formLabel = 'Bidang')
                     <label for="{{$formName}}">{{$formLabel}}</label>
-                    <input type="text" class="form-control" id="{{$formName}}" placeholder="{{$formLabel}}"
+                    <input readonly type="text" class="form-control" id="{{$formName}}" placeholder="{{$formLabel}}"
                            x-model.lazy="formData.{{$formName}}"
                            :class="{'is-invalid': validationErrors.{{$formName}}}">
                     <template x-if="validationErrors.{{$formName}}">
@@ -141,16 +107,19 @@
                 formData: {
                     nip: '',
                     nama: '',
-                    bidang_id: '',
-                    pangkat_golongan_id: '',
-                    jabatan: '',
-                    peran: ''
+                    skpd: '',
+                    bidang: '',
+                    password: '',
+                    password_confirmation: '',
                 },
                 validationErrors: {},
 
                 async initData() {
                     let res = await axios.post(`/profil`);
                     let data = res.data;
+
+                    data.skpd = data.skpd.skpd;
+                    data.bidang = data.bidang.bidang;
 
                     for (let key in this.formData) {
                         if (data.hasOwnProperty(key)) {
