@@ -11,6 +11,7 @@
                 </a>
             </li>
 
+            @role('admin')
             {{-- SKPD --}}
             <li class="nav-item">
                 <a href="/skpd" class="nav-link {{ Request::is('skpd') || Request::is('skpd/*') ? 'active' : '' }}">
@@ -18,7 +19,9 @@
                     <p>SKPD</p>
                 </a>
             </li>
+            @endrole
 
+            @role('admin')
             {{-- Bidang --}}
             <li class="nav-item">
                 <a href="/bidang" class="nav-link {{ Request::is('bidang') || Request::is('bidang/*') ? 'active' : '' }}">
@@ -26,7 +29,9 @@
                     <p>Bidang</p>
                 </a>
             </li>
+            @endrole
 
+            @role('admin')
             {{-- Pegawai --}}
             <li class="nav-item">
                 <a href="/pegawai" class="nav-link {{ Request::is('pegawai') || Request::is('pegawai/*') ? 'active' : '' }}">
@@ -34,6 +39,7 @@
                     <p>Pegawai</p>
                 </a>
             </li>
+            @endrole
 
         </ul>
     </nav>

@@ -20,14 +20,16 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/getBidangBySkpd/{skpd}', [HelperController::class, 'getBidangBySkpd']);
     });
 
-    Route::post('/skpd/datatable', [SkpdController::class, 'datatable']);
-    Route::resource('/skpd', SkpdController::class);
+    Route::middleware(['role:admin'])->group(function () {
+        Route::post('/skpd/datatable', [SkpdController::class, 'datatable']);
+        Route::resource('/skpd', SkpdController::class);
 
-    Route::post('/bidang/datatable', [BidangController::class, 'datatable']);
-    Route::resource('/bidang', BidangController::class);
+        Route::post('/bidang/datatable', [BidangController::class, 'datatable']);
+        Route::resource('/bidang', BidangController::class);
 
-    Route::post('/pegawai/datatable', [PegawaiController::class, 'datatable']);
-    Route::resource('/pegawai', PegawaiController::class);
+        Route::post('/pegawai/datatable', [PegawaiController::class, 'datatable']);
+        Route::resource('/pegawai', PegawaiController::class);
+    });
 });
 
 require __DIR__.'/auth.php';
