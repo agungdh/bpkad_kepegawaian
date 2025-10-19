@@ -10,9 +10,12 @@ Alpine.data('form', () => ({
         try {
             this.isSubmitting = true;
 
-            await axios.post('/login', this.formData);
+            let res = await axios.post('/login', this.formData);
+            let data = res.data
 
-            window.location.href = '/dashboard';
+            console.log(data)
+
+            // window.location.href = '/dashboard';
         } catch (err) {
             if (err.response?.status === 422) {
                 toastr.error('Username atau password salah');
