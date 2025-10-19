@@ -57,26 +57,16 @@
         <div class="card-body">
             <p class="login-box-msg">Sign in to start your session</p>
 
-            <form @submit.prevent="submit">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Username" x-model.lazy="formData.username">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-user"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Password" x-model.lazy="formData.password">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
-                        </div>
-                    </div>
-                </div>
+            <form method="POST" action="{{route('passport.authorizations.approve')}}">
+                @csrf
+
+                <input type="hidden" name="state" value="{{$request->state}}">
+                <input type="hidden" name="client_id" value="{{$request->client_id}}">
+                <input type="hidden" name="auth_token" value="{{$authToken}}">
+
                 <div class="row">
                     <div class="col-12">
-                        <button :disabled="isSubmitting" type="submit" class="btn btn-primary btn-block">Sign In
+                        <button type="submit" class="btn btn-primary btn-block">Sign In
                         </button>
                     </div>
                     <!-- /.col -->
@@ -114,6 +104,5 @@
 <script src="/assets/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/assets/AdminLTE-3.2.0/dist/js/adminlte.min.js"></script>
-@vite('resources/js/pages/auth/login.js')
 </body>
 </html>
