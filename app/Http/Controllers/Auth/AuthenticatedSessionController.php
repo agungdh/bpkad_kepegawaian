@@ -37,7 +37,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->flash('success', 'Login berhasil. Selamat datang !!!');
 
-        return $request->session()->get('url.intended');
+        return $request->session()->get('url.intended', route('dashboard', absolute: false));
     }
 
     /**
