@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Passport\Passport;
 use Opcodes\LogViewer\Facades\LogViewer;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,5 +29,9 @@ class AppServiceProvider extends ServiceProvider
             return $request->user()
                 && $request->user()->hasRole('admin');
         });
+
+        Passport::tokensExpireIn(CarbonInterval::days(15));
+        Passport::refreshTokensExpireIn(CarbonInterval::days(30));
+        Passport::personalAccessTokensExpireIn(CarbonInterval::months(6));
     }
 }
