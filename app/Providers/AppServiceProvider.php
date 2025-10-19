@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Passport\Client;
 use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\View;
@@ -34,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
         Passport::tokensExpireIn(CarbonInterval::days(15));
         Passport::refreshTokensExpireIn(CarbonInterval::days(30));
         Passport::personalAccessTokensExpireIn(CarbonInterval::months(6));
+        Passport::useClientModel(Client::class);
 
         Passport::authorizationView(
             fn ($parameters) => View::make('pages.auth.sso', [
