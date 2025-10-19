@@ -12,7 +12,7 @@ Alpine.data('form', () => ({
 
             await axios.post('/login', this.formData);
 
-            window.location.href = '/';
+            window.location.href = '/dashboard';
         } catch (err) {
             if (err.response?.status === 422) {
                 toastr.error('Username atau password salah');
