@@ -37,10 +37,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->flash('success', 'Login berhasil. Selamat datang !!!');
 
-        return response()->json([
-           'url1' => session('url.intended'),
-           'url2' => $request->session()->get('url.intended'),
-        ]);
+        return $request->session()->get('url.intended');
     }
 
     /**
