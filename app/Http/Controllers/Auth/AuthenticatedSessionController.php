@@ -34,32 +34,16 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        $driver = Session::getDrivers()[Session::getDefaultDriver()];
-        $dbId = $driver->getId();
-
-        Log::info('sebelum auth: '. $dbId);
         $request->authenticate();
 
-        Log::info('sebelum regen: '. $dbId);
         $request->session()->regenerate();
 
-        Log::info('sebelum update db: '. $dbId);
-        $dbSessBef = DB::table('sessions')->where('id', $dbId)->first();
-        DB::table('sessions')->where('id', $dbId)->update([
-            'user_uuid' => $request->user()->uuid,
-        ]);
-        $dbSess = DB::table('sessions')->where('id', $dbId)->first();
-        Session::put('sess_data', [
-            'id' => $dbId,
-            'dbSessBef' => $dbSessBef,
-            'dbSess' => $dbSess,
+        DB::table('sessions')->where('id', $request->session()->getId())->update([
             'user_uuid' => $request->user()->uuid,
         ]);
 
-        Log::info('sebelum flash: '. $dbId);
         $request->session()->flash('success', 'Login berhasil. Selamat datang !!!');
 
-        Log::info('sebelum return: '. $dbId);
         return $request->session()->get('url.intended', route('dashboard', absolute: false));
     }
 
