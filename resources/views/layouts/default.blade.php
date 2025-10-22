@@ -1,5 +1,6 @@
 @php
     $user = auth()->user();
+    dd(session()->all());
     $user->image = Avatar::create($user->profile->nama)->toBase64();
 @endphp
 
