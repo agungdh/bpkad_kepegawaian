@@ -39,7 +39,7 @@ class User extends Authenticatable implements OAuthenticatable
         return $this->hasOne(Pegawai::class);
     }
 
-    protected $appends = ['profile', 'name'];
+    protected $appends = ['profile', 'name', 'rolename'];
 
     protected function profile(): Attribute
     {
