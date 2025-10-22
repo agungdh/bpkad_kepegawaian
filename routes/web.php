@@ -5,12 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\SkpdController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-Route::get('/test', function (Request $request) {
-    return DB::table('sessions')->where('id', $request->session()->getId())->first();
-});
 
 Route::redirect('/', '/dashboard')->name('home');
 
@@ -37,4 +32,4 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
