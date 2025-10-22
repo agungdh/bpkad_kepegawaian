@@ -36,7 +36,9 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        $request->session()->regenerate();
+         $request->session()->regenerate();
+
+        $request->session()->save();
 
         DB::table('sessions')->where('id', $request->session()->getId())->update([
             'user_uuid' => $request->user()->uuid,
