@@ -82,8 +82,7 @@
                     <!-- Menu Footer-->
                     <li class="user-footer">
                         <a href="/profil" class="btn btn-default btn-flat">Profil</a>
-                        <a href="javascript:void(0)" class="btn btn-default btn-flat float-right" id="logoutButton"
-                        ">Sign out</a>
+                        <a href="/logout" class="btn btn-default btn-flat float-right">Sign out</a>
                     </li>
                 </ul>
             </li>
@@ -188,10 +187,6 @@
             autoApply: true,
             autoUpdateInput: false
         });
-    });
-
-    document.getElementById('logoutButton').addEventListener('click', function(e) {
-        document.getElementById('logoutForm').submit();
     });
 </script>
 <!-- Bootstrap 4 -->
