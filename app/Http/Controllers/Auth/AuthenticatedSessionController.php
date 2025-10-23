@@ -55,21 +55,35 @@ class AuthenticatedSessionController extends Controller
     public function destroy(Request $request)
     {
         $user = Auth::user();
+        $userId = $user->id;
+        $sessionId = $request->session()->getId();
 
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        Log::info('before logout logout', [
-            'request' => $request,
-            'user' => $user,
-        ]);
-        return redirect($request->redirect_to ?? '/')->afterSending(function() use($request, $user) {
-            Log::info('after logout logout', [
-                'request' => $request,
-                'user' => $user,
-            ]);
+        Log::info('before logout logout', compact([
+            'userId',
+            'sessionId',
+        ]));
+
+
+        $userRegen = Auth::user();
+        $userIdRegen = $userRegen?->id;
+        $sessionIdRegen = $request->session()->getId();
+        Log::info('regen', compact([
+            'userIdRegen',
+            'sessionIdRegen',
+        ]));
+
+        defer(function () use ($userId, $sessionId) {
+            Log::info('after logout logout', compact([
+                'userId',
+                'sessionId',
+            ]));
         });
+
+        return redirect($request->redirect_to ?? '/');
     }
 }
