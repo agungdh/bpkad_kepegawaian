@@ -18,4 +18,6 @@ Route::middleware('auth')->group(function () {
         ->name('logout');
 
     Route::get('/logout', [AuthenticatedSessionController::class, 'destroy']);
+
+    Route::get('/redirect', [AuthenticatedSessionController::class, 'redirect']);
 });

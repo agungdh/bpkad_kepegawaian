@@ -4,13 +4,30 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\SessionJwt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class AuthenticatedSessionController extends Controller
 {
+    public function redirect(Request $request)
+    {
+        $sessionId = $request->session()->getId();
+
+        $encryptedJti = $request->jti;
+        $jti = Crypt::decryptString($encryptedJti);
+
+        SessionJwt::query()->create([
+            'session_id' => $sessionId,
+            'jti' => $jti,
+        ]);
+
+        return redirect($request->redirect_to);
+    }
+
     public function show(Request $request)
     {
         $user = $request->user();
