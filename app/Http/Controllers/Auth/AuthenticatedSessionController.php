@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class AuthenticatedSessionController extends Controller
@@ -51,13 +52,24 @@ class AuthenticatedSessionController extends Controller
     /**
      * Destroy an authenticated session.
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(Request $request)
     {
+        $user = Auth::user();
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect($request->redirect_to ?? '/');
+        Log::info('before logout logout', [
+            'request' => $request,
+            'user' => $user,
+        ]);
+        return redirect($request->redirect_to ?? '/')->afterSending(function() use($request, $user) {
+            Log::info('after logout logout', [
+                'request' => $request,
+                'user' => $user,
+            ]);
+        });
     }
 }
